@@ -1,13 +1,4 @@
-import {
-  Column,
-  Entity,
-  Generated,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { City } from './city.entity';
-import { SubCompany } from './sub-company.entity';
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Ip {
@@ -15,33 +6,57 @@ export class Ip {
   @Generated('increment')
   id: number;
 
-  @Column()
-  gk: boolean;
+  @Column({ default: true })
+  hasIp: boolean;
 
-  @ManyToOne(() => SubCompany)
-  @JoinColumn()
-  subCompanies: SubCompany;
+  @Column({ default: true })
+  hasPsn: boolean;
 
-  //   private Boolean hasPsn;
+  @Column({ nullable: true })
+  psnRegistrationPeriod: number;
 
-  //   private Number psnRegistrationPeriod;
+  @Column({ default: true })
+  hasOsn: boolean;
 
-  //   private Boolean hasIp;
+  @Column({ nullable: true })
+  osnRegistrationPeriod: number;
 
-  //   private Boolean hasOsn;
-  //   private Number osnRegistrationPeriod;
-  //   private Boolean hasUsn;
-  //   private Number usnRegistrationPeriod;
-  //   private Boolean hasEnvd;
-  //   private Number envdRegistrationPeriod;
-  //   private Boolean hasEchn;
-  //   private Number echnRegistrationPeriod;
+  @Column({ default: true })
+  hasUsn: boolean;
 
-  //   private Number coastFromAtOne;
-  //   private Number coastToAtOne;
-  //   private Number maxAllSum;
-  //   private Boolean hasRestrictions;
-  //   private Number minAdvance;
-  //   private Number maxPeriodOfFinancing;
-  //   private Boolean forTaxi;
+  @Column({ nullable: true })
+  usnRegistrationPeriod: number;
+
+  @Column({ default: true })
+  hasEnvd: boolean;
+
+  @Column({ nullable: true })
+  envdRegistrationPeriod: number;
+
+  @Column({ default: true })
+  hasEchn: boolean;
+
+  @Column({ nullable: true })
+  echnRegistrationPeriod: number;
+
+  @Column({ nullable: true })
+  coastFromAtOne: number;
+
+  @Column({ nullable: true })
+  coastToAtOne: number;
+
+  @Column({ nullable: true })
+  maxAllSum: number;
+
+  @Column({ nullable: true })
+  hasRestrictions: number;
+
+  @Column({ nullable: true })
+  minAdvance: number;
+
+  @Column({ nullable: true })
+  maxPeriodOfFinancing: number;
+
+  @Column({ default: true })
+  forTaxi: boolean;
 }

@@ -1,5 +1,7 @@
+delete from legal;
 delete from types_of_financed_holding;
 delete from criteria_financed_holding;
+delete from ip;
 delete from city_of_presence_customer_coverage_area;
 delete from preference_filter;
 delete from sub_company;
@@ -41,7 +43,14 @@ FROM   city, preference_filter
 WHERE city.name = 'Екатеринбург'
 LIMIT 1;
 
-INSERT INTO criteria_financed_holding (maxCountOfMonth) VALUES (6);
+INSERT INTO ip (`hasIp`, `hasPsn`, `psnRegistrationPeriod`) VALUES (true, true, 0);
+INSERT INTO legal (`hasLegalEntity`, `hasOsn`, `osnRegistrationPeriod`) VALUES (true, true, 0);
+
+INSERT INTO criteria_financed_holding (maxCountOfMonth, ipId, legalId)
+SELECT 6, ip.id, legal.id
+FROM ip, legal
+LIMIT 1;
+
 INSERT INTO criteria_financed_holding (maxCountOfMonth) VALUES (7);
 INSERT INTO criteria_financed_holding (maxCountOfMonth) VALUES (8);
 

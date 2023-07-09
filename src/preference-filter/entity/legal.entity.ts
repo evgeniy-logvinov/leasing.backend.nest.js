@@ -1,13 +1,4 @@
-import {
-  Column,
-  Entity,
-  Generated,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { City } from './city.entity';
-import { SubCompany } from './sub-company.entity';
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Legal {
@@ -15,10 +6,51 @@ export class Legal {
   @Generated('increment')
   id: number;
 
-  @Column()
-  gk: boolean;
+  @Column({ default: true })
+  hasLegalEntity: boolean;
 
-  @ManyToOne(() => SubCompany)
-  @JoinColumn()
-  subCompanies: SubCompany;
+  @Column({ default: true })
+  hasOsn: boolean;
+
+  @Column({ nullable: true })
+  osnRegistrationPeriod: number;
+
+  @Column({ default: true })
+  hasUsn: boolean;
+
+  @Column({ nullable: true })
+  usnRegistrationPeriod: number;
+
+  @Column({ default: true })
+  hasEnvd: boolean;
+
+  @Column({ nullable: true })
+  envdRegistrationPeriod: number;
+
+  @Column({ default: true })
+  hasEchn: boolean;
+
+  @Column({ nullable: true })
+  echnRegistrationPeriod: number;
+
+  @Column({ nullable: true })
+  coastFromAtOne: number;
+
+  @Column({ nullable: true })
+  coastToAtOne: number;
+
+  @Column({ nullable: true })
+  maxAllSum: number;
+
+  @Column({ default: true })
+  hasRestrictions: boolean;
+
+  @Column({ nullable: true })
+  minAdvance: number;
+
+  @Column({ nullable: true })
+  maxPeriodOfFinancing: number;
+
+  @Column({ default: true })
+  forTaxi: boolean;
 }

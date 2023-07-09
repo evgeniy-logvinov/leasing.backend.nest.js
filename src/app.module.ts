@@ -7,6 +7,8 @@ import { CityOfPresenceCustomerCoverageArea } from './preference-filter/entity/c
 import { City } from './preference-filter/entity/city.entity';
 import { CriteriaFinancedHolding } from './preference-filter/entity/criteria-financed-holding.entity';
 import { Gk } from './preference-filter/entity/gk.entity';
+import { Ip } from './preference-filter/entity/ip.entity';
+import { Legal } from './preference-filter/entity/legal.entity';
 import { PreferenceFilter } from './preference-filter/entity/preference-filter.entity';
 import { SubCompany } from './preference-filter/entity/sub-company.entity';
 import { SubjectGuarantee } from './preference-filter/entity/subject-guarantee';
@@ -35,6 +37,8 @@ import { PreferenceFilterModule } from './preference-filter/preference-filter.mo
           Gk,
           CriteriaFinancedHolding,
           SubjectGuarantee,
+          Ip,
+          Legal,
         ],
         // TODO: read about this and check
         autoLoadEntities: true,

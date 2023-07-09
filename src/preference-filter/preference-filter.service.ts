@@ -20,9 +20,9 @@ export class PreferenceFilterService {
           subCompanies: true,
         },
         typesOfFinancedHoldings: {
-          newCriteria: true,
-          previouslyUsedCriteria: true,
-          returnableCriteria: true,
+          newCriteria: { ip: true, legal: true },
+          previouslyUsedCriteria: { ip: true, legal: true },
+          returnableCriteria: { ip: true, legal: true },
         },
         subjectGuarantee: true,
       },
