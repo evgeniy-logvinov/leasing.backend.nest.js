@@ -4,6 +4,7 @@ import {
   Generated,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { City } from './city.entity';
@@ -11,15 +12,14 @@ import { SubCompany } from './sub-company.entity';
 
 @Entity()
 export class Gk {
-  @PrimaryGeneratedColumn('uuid')
-  @Generated('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  @Generated('increment')
+  id: number;
 
   @Column()
   gk: boolean;
 
-  @ManyToOne(() => SubCompany)
-  @JoinColumn()
+  @OneToMany(() => SubCompany, (item) => item.gk)
   subCompanies: SubCompany;
 
   //   @Id

@@ -9,6 +9,7 @@ import { CriteriaFinancedHolding } from './preference-filter/entity/criteria-fin
 import { Gk } from './preference-filter/entity/gk.entity';
 import { PreferenceFilter } from './preference-filter/entity/preference-filter.entity';
 import { SubCompany } from './preference-filter/entity/sub-company.entity';
+import { SubjectGuarantee } from './preference-filter/entity/subject-guarantee';
 import { TypesOfFinancedHolding } from './preference-filter/entity/types-of-financed-holding.entity';
 import { PreferenceFilterModule } from './preference-filter/preference-filter.module';
 
@@ -33,6 +34,7 @@ import { PreferenceFilterModule } from './preference-filter/preference-filter.mo
           TypesOfFinancedHolding,
           Gk,
           CriteriaFinancedHolding,
+          SubjectGuarantee,
         ],
         // TODO: read about this and check
         autoLoadEntities: true,

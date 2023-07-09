@@ -11,6 +11,35 @@ export class PreferenceFilterService {
   ) {}
 
   getAll(): Promise<PreferenceFilter[]> {
-    return this.preferenceFilterRepository.find({});
+    return this.preferenceFilterRepository.find({
+      relations: {
+        cityOfPresenceCustomerCoverageArea: {
+          cities: true,
+        },
+        gk: {
+          subCompanies: true,
+        },
+        typesOfFinancedHoldings: {
+          newCriteria: true,
+          previouslyUsedCriteria: true,
+          returnableCriteria: true,
+        },
+        subjectGuarantee: true,
+      },
+      // return await this.postRepository.find({
+      //   relations: ['images', 'user'],
+      //   where: { user: { id: id } },
+      // });,
+    });
   }
+
+  // getAll(): Promise<PreferenceFilter[]> {
+  //   return this.preferenceFilterRepository.create({
+  //     cityOfPresenceCustomerCoverageArea: {
+  //       cities: {
+
+  //       }
+  //     }
+  //   });
+  // }
 }

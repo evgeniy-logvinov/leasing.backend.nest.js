@@ -1,10 +1,13 @@
-import { Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class CriteriaFinancedHolding {
-  @PrimaryGeneratedColumn('uuid')
-  @Generated('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  @Generated('increment')
+  id: number;
+
+  @Column()
+  maxCountOfMonth: number;
 }
 
 // package com.ekl.lizing.model.entity.user.company.filter;

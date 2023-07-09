@@ -11,9 +11,9 @@ import { SubCompany } from './sub-company.entity';
 
 @Entity()
 export class Ip {
-  @PrimaryGeneratedColumn('uuid')
-  @Generated('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  @Generated('increment')
+  id: number;
 
   @Column()
   gk: boolean;

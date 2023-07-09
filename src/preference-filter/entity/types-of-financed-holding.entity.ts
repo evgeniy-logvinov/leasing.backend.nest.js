@@ -4,29 +4,40 @@ import {
   Generated,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { City } from './city.entity';
 import { CriteriaFinancedHolding } from './criteria-financed-holding.entity';
+import { PreferenceFilter } from './preference-filter.entity';
 import { SubCompany } from './sub-company.entity';
 
 @Entity()
 export class TypesOfFinancedHolding {
-  @PrimaryGeneratedColumn('uuid')
-  @Generated('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  @Generated('increment')
+  id: number;
 
-  @ManyToOne(() => TypesOfFinancedHolding)
+  @Column()
+  name: string;
+
+  @Column({ default: false })
+  selected: boolean;
+
+  @OneToOne(() => CriteriaFinancedHolding)
   @JoinColumn()
   newCriteria: CriteriaFinancedHolding;
 
-  @ManyToOne(() => TypesOfFinancedHolding)
+  @OneToOne(() => CriteriaFinancedHolding)
   @JoinColumn()
   previouslyUsedCriteria: CriteriaFinancedHolding;
 
-  @ManyToOne(() => TypesOfFinancedHolding)
+  @OneToOne(() => CriteriaFinancedHolding)
   @JoinColumn()
   returnableCriteria: CriteriaFinancedHolding;
+
+  @ManyToOne(() => PreferenceFilter, (item) => item.typesOfFinancedHoldings)
+  preferenceFilter: PreferenceFilter;
   //   @Id
   //   @GeneratedValue(strategy = GenerationType.AUTO)
   //   private Long id;

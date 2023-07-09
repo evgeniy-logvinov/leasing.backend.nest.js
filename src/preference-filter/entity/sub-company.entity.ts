@@ -6,15 +6,22 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Gk } from './gk.entity';
 
 @Entity()
 export class SubCompany {
-  @PrimaryGeneratedColumn('uuid')
-  @Generated('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  @Generated('increment')
+  id: number;
 
   @Column()
   accreditation: boolean;
+
+  @ManyToOne(() => Gk, (item) => item.subCompanies)
+  gk: Gk;
+
+  @Column()
+  name: string;
 
   //   @Column(name = "agreementId")
   //   private Long agreementId;

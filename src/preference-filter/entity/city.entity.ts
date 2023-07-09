@@ -9,9 +9,9 @@ import {
 
 @Entity()
 export class City {
-  @PrimaryGeneratedColumn('uuid')
-  @Generated('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  @Generated('increment')
+  id: number;
 
   @Column()
   name: string;

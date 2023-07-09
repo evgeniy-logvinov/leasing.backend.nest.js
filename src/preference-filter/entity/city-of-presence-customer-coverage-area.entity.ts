@@ -2,25 +2,32 @@ import {
   Column,
   Entity,
   Generated,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { City } from './city.entity';
+import { PreferenceFilter } from './preference-filter.entity';
 
 @Entity()
 export class CityOfPresenceCustomerCoverageArea {
-  @PrimaryGeneratedColumn('uuid')
-  @Generated('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  @Generated('increment')
+  id: number;
 
   @ManyToOne(() => City)
-  @JoinColumn()
   cities: City;
+
+  @ManyToOne(() => City)
+  сustomerCoverageArea: City;
 
   @Column()
   zato: boolean;
 
+  @ManyToOne(
+    () => PreferenceFilter,
+    (item) => item.cityOfPresenceCustomerCoverageArea,
+  )
+  preferenceFilter: PreferenceFilter;
   //   @ElementCollection
   //     @CollectionTable(name = "cities_of_presence_customer_coverage_area_city", joinColumns = @JoinColumn(name = "cities_of_presence_customer_coverage_area_city_id"))
   //     @Column(name = "city_id")

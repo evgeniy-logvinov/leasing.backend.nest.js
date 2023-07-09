@@ -4,19 +4,22 @@ import {
   Generated,
   JoinColumn,
   ManyToOne,
+  OneToMany,
+  OneToOne,
   //   JoinColumn,
   //   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CityOfPresenceCustomerCoverageArea } from './city-of-presence-customer-coverage-area.entity';
 import { Gk } from './gk.entity';
+import { SubjectGuarantee } from './subject-guarantee';
 import { TypesOfFinancedHolding } from './types-of-financed-holding.entity';
 
 @Entity()
 export class PreferenceFilter {
-  @PrimaryGeneratedColumn('uuid')
-  @Generated('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  @Generated('increment')
+  id: number;
 
   //   @Column()
   //   city: string;
@@ -29,17 +32,25 @@ export class PreferenceFilter {
   //   @Column()
   //   zato: boolean;
 
-  @ManyToOne(() => CityOfPresenceCustomerCoverageArea)
-  @JoinColumn()
-  cityOfPresenceCustomerCoverageArea: CityOfPresenceCustomerCoverageArea;
+  // @ManyToOne(() => CityOfPresenceCustomerCoverageArea)
+  // @JoinColumn()
+  // cityOfPresenceCustomerCoverageArea: CityOfPresenceCustomerCoverageArea;
+  @OneToMany(
+    () => CityOfPresenceCustomerCoverageArea,
+    (item) => item.preferenceFilter,
+  )
+  cityOfPresenceCustomerCoverageArea: CityOfPresenceCustomerCoverageArea[];
 
-  @ManyToOne(() => CityOfPresenceCustomerCoverageArea)
+  @OneToOne(() => Gk)
   @JoinColumn()
   gk: Gk;
 
-  @ManyToOne(() => TypesOfFinancedHolding)
+  @OneToMany(() => TypesOfFinancedHolding, (item) => item.preferenceFilter)
+  typesOfFinancedHoldings: TypesOfFinancedHolding[];
+
+  @OneToOne(() => SubjectGuarantee)
   @JoinColumn()
-  typesOfFinancedHoldings: TypesOfFinancedHolding;
+  subjectGuarantee: SubjectGuarantee;
 
   //     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "filter")
   //     private Set<CityOfPresenceCustomerCoverageArea> cityOfPresenceCustomerCoverageAreas;
