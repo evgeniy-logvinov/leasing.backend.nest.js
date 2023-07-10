@@ -5,8 +5,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Analitic } from './leasing-company/infrastructure/entity/analitic.entity';
 import { AnaliticsDepartment } from './leasing-company/infrastructure/entity/analitics-department.entity';
+import { CityManager } from './leasing-company/infrastructure/entity/city-manager.entity';
 import { Employee } from './leasing-company/infrastructure/entity/employee.entity';
 import { Infrastructure } from './leasing-company/infrastructure/entity/infrustructure.entity';
+import { Manager } from './leasing-company/infrastructure/entity/manager.entity';
+import { SalesDepartment } from './leasing-company/infrastructure/entity/sales-department.entity';
 import { InfrastructureModule } from './leasing-company/infrastructure/infrastructure.module';
 import { CityOfPresenceCustomerCoverageArea } from './leasing-company/preference-filter/entity/city-of-presence-customer-coverage-area.entity';
 import { City } from './leasing-company/preference-filter/entity/city.entity';
@@ -48,6 +51,9 @@ import { PreferenceFilterModule } from './leasing-company/preference-filter/pref
           AnaliticsDepartment,
           Employee,
           Analitic,
+          SalesDepartment,
+          CityManager,
+          Manager,
         ],
         // TODO: read about this and check
         autoLoadEntities: true,

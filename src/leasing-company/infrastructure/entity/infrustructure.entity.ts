@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { AnaliticsDepartment } from './analitics-department.entity';
+import { SalesDepartment } from './sales-department.entity';
 
 @Entity()
 export class Infrastructure {
@@ -16,4 +17,8 @@ export class Infrastructure {
   @OneToOne(() => AnaliticsDepartment)
   @JoinColumn()
   analiticsDepartment: AnaliticsDepartment;
+
+  @OneToOne(() => SalesDepartment)
+  @JoinColumn()
+  salesDepartment: SalesDepartment;
 }

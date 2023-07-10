@@ -14,6 +14,10 @@ export class InfrastructureService {
     return this.infrastructureRepository.find({
       relations: {
         analiticsDepartment: { analitics: true, head: true },
+        salesDepartment: {
+          cityManager: { manager: true, head: true },
+          head: true,
+        },
         //   cityOfPresenceCustomerCoverageArea: {
         //     cities: true,
         //   },
