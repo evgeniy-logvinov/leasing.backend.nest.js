@@ -1,6 +1,6 @@
-delete from legal;
 delete from types_of_financed_holding;
 delete from criteria_financed_holding;
+delete from legal;
 delete from ip;
 delete from city_of_presence_customer_coverage_area;
 delete from preference_filter;

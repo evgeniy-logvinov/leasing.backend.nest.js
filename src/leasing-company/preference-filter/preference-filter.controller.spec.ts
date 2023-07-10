@@ -9,7 +9,9 @@ describe('PreferenceFilterController', () => {
       controllers: [PreferenceFilterController],
     }).compile();
 
-    controller = module.get<PreferenceFilterController>(PreferenceFilterController);
+    controller = module.get<PreferenceFilterController>(
+      PreferenceFilterController,
+    );
   });
 
   it('should be defined', () => {

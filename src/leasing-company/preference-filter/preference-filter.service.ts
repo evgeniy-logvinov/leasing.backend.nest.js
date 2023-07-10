@@ -26,20 +26,6 @@ export class PreferenceFilterService {
         },
         subjectGuarantee: true,
       },
-      // return await this.postRepository.find({
-      //   relations: ['images', 'user'],
-      //   where: { user: { id: id } },
-      // });,
     });
   }
-
-  // getAll(): Promise<PreferenceFilter[]> {
-  //   return this.preferenceFilterRepository.create({
-  //     cityOfPresenceCustomerCoverageArea: {
-  //       cities: {
-
-  //       }
-  //     }
-  //   });
-  // }
 }
