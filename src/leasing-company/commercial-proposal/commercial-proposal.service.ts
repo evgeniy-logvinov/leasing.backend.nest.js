@@ -13,6 +13,7 @@ export class CommercialProposalService {
   getAll(): Promise<CommercialProposal[]> {
     return this.commercialProposalRepository.find({
       relations: {
+        application: true,
         // preferenceFilter: {
         //   cityOfPresenceCustomerCoverageArea: {
         //     cities: true,

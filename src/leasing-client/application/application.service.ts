@@ -13,6 +13,7 @@ export class ApplicationService {
   getAll(): Promise<Application[]> {
     return this.applicationRepository.find({
       relations: {
+        commercialProposal: true,
         //   analiticsDepartment: { analitics: true, head: true },
         //   salesDepartment: {
         //     cityManager: { manager: true, head: true },
