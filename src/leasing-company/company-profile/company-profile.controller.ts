@@ -7,7 +7,7 @@ export class CompanyProfileController {
   constructor(private readonly companyInfoService: CompanyProfileService) {}
 
   @Get()
-  getInfrustructure(): Promise<CompanyProfile[]> {
+  getCompanyProfile(): Promise<CompanyProfile[]> {
     return this.companyInfoService.getAll();
   }
 }
