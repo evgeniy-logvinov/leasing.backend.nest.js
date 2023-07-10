@@ -9,6 +9,8 @@ import { ClientProfileModule } from './leasing-client/client-profile/client-prof
 import { ClientProfile } from './leasing-client/client-profile/entity/client-profile.entity';
 import { LeasingClient } from './leasing-client/entity/leasing-client.entity';
 import { LeasingClientModule } from './leasing-client/leasing-client.module';
+import { CommercialProposalModule } from './leasing-company/commercial-proposal/commercial-proposal.module';
+import { CommercialProposal } from './leasing-company/commercial-proposal/entity/commercial-proposal.entity';
 import { CompanyProfileModule } from './leasing-company/company-profile/company-profile.module';
 import { CompanyProfile } from './leasing-company/company-profile/entity/company-profile.entity';
 import { LeasingCompany } from './leasing-company/entity/leasing-company.entity';
@@ -69,6 +71,7 @@ import { PreferenceFilterModule } from './leasing-company/preference-filter/pref
           LeasingClient,
           ClientProfile,
           Application,
+          CommercialProposal,
         ],
         // TODO: read about this and check
         autoLoadEntities: true,
@@ -83,6 +86,7 @@ import { PreferenceFilterModule } from './leasing-company/preference-filter/pref
     LeasingClientModule,
     ClientProfileModule,
     ApplicationModule,
+    CommercialProposalModule,
   ],
   controllers: [AppController],
   providers: [AppService],
