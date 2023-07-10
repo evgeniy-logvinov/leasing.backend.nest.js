@@ -3,17 +3,22 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CityOfPresenceCustomerCoverageArea } from './preference-filter/entity/city-of-presence-customer-coverage-area.entity';
-import { City } from './preference-filter/entity/city.entity';
-import { CriteriaFinancedHolding } from './preference-filter/entity/criteria-financed-holding.entity';
-import { Gk } from './preference-filter/entity/gk.entity';
-import { Ip } from './preference-filter/entity/ip.entity';
-import { Legal } from './preference-filter/entity/legal.entity';
-import { PreferenceFilter } from './preference-filter/entity/preference-filter.entity';
-import { SubCompany } from './preference-filter/entity/sub-company.entity';
-import { SubjectGuarantee } from './preference-filter/entity/subject-guarantee';
-import { TypesOfFinancedHolding } from './preference-filter/entity/types-of-financed-holding.entity';
-import { PreferenceFilterModule } from './preference-filter/preference-filter.module';
+import { Analitic } from './leasing-company/infrastructure/entity/analitic.entity';
+import { AnaliticsDepartment } from './leasing-company/infrastructure/entity/analitics-department.entity';
+import { Employee } from './leasing-company/infrastructure/entity/employee.entity';
+import { Infrastructure } from './leasing-company/infrastructure/entity/infrustructure.entity';
+import { InfrastructureModule } from './leasing-company/infrastructure/infrastructure.module';
+import { CityOfPresenceCustomerCoverageArea } from './leasing-company/preference-filter/entity/city-of-presence-customer-coverage-area.entity';
+import { City } from './leasing-company/preference-filter/entity/city.entity';
+import { CriteriaFinancedHolding } from './leasing-company/preference-filter/entity/criteria-financed-holding.entity';
+import { Gk } from './leasing-company/preference-filter/entity/gk.entity';
+import { Ip } from './leasing-company/preference-filter/entity/ip.entity';
+import { Legal } from './leasing-company/preference-filter/entity/legal.entity';
+import { PreferenceFilter } from './leasing-company/preference-filter/entity/preference-filter.entity';
+import { SubCompany } from './leasing-company/preference-filter/entity/sub-company.entity';
+import { SubjectGuarantee } from './leasing-company/preference-filter/entity/subject-guarantee';
+import { TypesOfFinancedHolding } from './leasing-company/preference-filter/entity/types-of-financed-holding.entity';
+import { PreferenceFilterModule } from './leasing-company/preference-filter/preference-filter.module';
 
 @Module({
   imports: [
@@ -39,6 +44,10 @@ import { PreferenceFilterModule } from './preference-filter/preference-filter.mo
           SubjectGuarantee,
           Ip,
           Legal,
+          Infrastructure,
+          AnaliticsDepartment,
+          Employee,
+          Analitic,
         ],
         // TODO: read about this and check
         autoLoadEntities: true,
@@ -47,6 +56,7 @@ import { PreferenceFilterModule } from './preference-filter/preference-filter.mo
       inject: [ConfigService],
     }),
     PreferenceFilterModule,
+    InfrastructureModule,
   ],
   controllers: [AppController],
   providers: [AppService],
