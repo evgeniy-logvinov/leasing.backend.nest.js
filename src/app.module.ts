@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ApplicationModule } from './leasing-client/application/application.module';
+import { Application } from './leasing-client/application/entity/application.entity';
 import { ClientProfileModule } from './leasing-client/client-profile/client-profile.module';
 import { ClientProfile } from './leasing-client/client-profile/entity/client-profile.entity';
 import { LeasingClient } from './leasing-client/entity/leasing-client.entity';
@@ -66,6 +68,7 @@ import { PreferenceFilterModule } from './leasing-company/preference-filter/pref
           LeasingCompany,
           LeasingClient,
           ClientProfile,
+          Application,
         ],
         // TODO: read about this and check
         autoLoadEntities: true,
@@ -79,6 +82,7 @@ import { PreferenceFilterModule } from './leasing-company/preference-filter/pref
     LeasingCompanyModule,
     LeasingClientModule,
     ClientProfileModule,
+    ApplicationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

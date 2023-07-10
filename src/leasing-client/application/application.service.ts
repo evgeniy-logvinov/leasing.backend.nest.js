@@ -1,21 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LeasingClient } from './entity/leasing-client.entity';
+import { Application } from './entity/application.entity';
 
 @Injectable()
-export class LeasingClientService {
+export class ApplicationService {
   constructor(
-    @InjectRepository(LeasingClient)
-    private leasingClientRepository: Repository<LeasingClient>,
+    @InjectRepository(Application)
+    private applicationRepository: Repository<Application>,
   ) {}
 
-  getAll(): Promise<LeasingClient[]> {
-    return this.leasingClientRepository.find({
+  getAll(): Promise<Application[]> {
+    return this.applicationRepository.find({
       relations: {
-        applications: true,
-        clientProfile: true,
-        // preferenceFilter: {
+        //   analiticsDepartment: { analitics: true, head: true },
+        //   salesDepartment: {
+        //     cityManager: { manager: true, head: true },
+        //     head: true,
+        //   },
         //   cityOfPresenceCustomerCoverageArea: {
         //     cities: true,
         //   },
@@ -28,15 +30,6 @@ export class LeasingClientService {
         //     returnableCriteria: { ip: true, legal: true },
         //   },
         //   subjectGuarantee: true,
-        // },
-        // companyProfile: true,
-        // infrastructure: {
-        //   analiticsDepartment: { analitics: true, head: true },
-        //   salesDepartment: {
-        //     cityManager: { manager: true, head: true },
-        //     head: true,
-        //   },
-        // },
       },
       // return await this.postRepository.find({
       //   relations: ['images', 'user'],

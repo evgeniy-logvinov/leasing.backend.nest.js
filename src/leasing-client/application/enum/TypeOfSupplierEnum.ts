@@ -1,0 +1,5 @@
+export enum TypeOfSupplierEnum {
+  OWNER = 'OWNER',
+  OFFICIAL_DEALER = 'OFFICIAL_DEALER',
+  NON_OFFICIAL_DEALER = 'NON_OFFICIAL_DEALER',
+}
