@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { DictionariesModule } from './dictionaries/dictionaries.module';
 import { ApplicationModule } from './leasing-client/application/application.module';
 import { ClientProfileModule } from './leasing-client/client-profile/client-profile.module';
 import { LeasingClientModule } from './leasing-client/leasing-client.module';
@@ -29,6 +30,7 @@ import { UserModule } from './user/user.module';
     CommercialProposalModule,
     AuthModule,
     UserModule,
+    DictionariesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

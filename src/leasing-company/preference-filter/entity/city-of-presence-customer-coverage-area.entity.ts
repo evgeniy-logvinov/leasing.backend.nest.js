@@ -1,3 +1,4 @@
+import { City } from 'src/dictionaries/entity/city.entity';
 import {
   Column,
   Entity,
@@ -5,7 +6,6 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { City } from './city.entity';
 import { PreferenceFilter } from './preference-filter.entity';
 
 @Entity()

@@ -7,7 +7,6 @@ delete from preference_filter;
 delete from sub_company;
 delete from gk;
 delete from subject_guarantee;
-delete from city;
 
 INSERT INTO gk (gk) VALUES (0);
 
@@ -27,8 +26,6 @@ INSERT INTO preference_filter (gkId, subjectGuaranteeId)
 SELECT gk.id, subject_guarantee.id
 FROM gk, subject_guarantee
 LIMIT 1;
-
-INSERT INTO city (name) VALUES ('Челябинск');
 
 INSERT INTO city_of_presence_customer_coverage_area (`citiesId`, zato, preferenceFilterId, сustomerCoverageAreaId)
 SELECT city.id, 1, preference_filter.id, city.id

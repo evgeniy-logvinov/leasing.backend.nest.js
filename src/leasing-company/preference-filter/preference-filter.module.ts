@@ -4,7 +4,6 @@ import { PreferenceFilterController } from './preference-filter.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PreferenceFilter } from './entity/preference-filter.entity';
 import { CityOfPresenceCustomerCoverageArea } from './entity/city-of-presence-customer-coverage-area.entity';
-import { City } from './entity/city.entity';
 import { SubCompany } from './entity/sub-company.entity';
 import { TypesOfFinancedHolding } from './entity/types-of-financed-holding.entity';
 import { Gk } from './entity/gk.entity';
@@ -12,13 +11,16 @@ import { CriteriaFinancedHolding } from './entity/criteria-financed-holding.enti
 import { SubjectGuarantee } from './entity/subject-guarantee';
 import { Legal } from './entity/legal.entity';
 import { Ip } from './entity/ip.entity';
+import { City } from 'src/dictionaries/entity/city.entity';
+import { District } from 'src/dictionaries/entity/district.entity';
+import { Area } from 'src/dictionaries/entity/area.entity';
+import { Country } from 'src/dictionaries/entity/country.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       PreferenceFilter,
       CityOfPresenceCustomerCoverageArea,
-      City,
       SubCompany,
       TypesOfFinancedHolding,
       Gk,
