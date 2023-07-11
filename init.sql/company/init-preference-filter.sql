@@ -30,9 +30,8 @@ LIMIT 1;
 INSERT INTO city_of_presence_customer_coverage_area (`citiesId`, zato, preferenceFilterId, сustomerCoverageAreaId)
 SELECT city.id, 1, preference_filter.id, city.id
 FROM   city, preference_filter
+WHERE city.name = 'Челябинск'
 LIMIT 1;
-
-INSERT INTO city (name) VALUES ('Екатеринбург');
 
 INSERT INTO city_of_presence_customer_coverage_area (`citiesId`, zato, preferenceFilterId, сustomerCoverageAreaId)
 SELECT city.id, 0, preference_filter.id, city.id
