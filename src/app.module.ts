@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { DictionariesModule } from './dictionaries/dictionaries.module';
+import { EmailModule } from './email/email.module';
 import { ApplicationModule } from './leasing-client/application/application.module';
 import { ClientProfileModule } from './leasing-client/client-profile/client-profile.module';
 import { LeasingClientModule } from './leasing-client/leasing-client.module';
@@ -31,6 +32,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     UserModule,
     DictionariesModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

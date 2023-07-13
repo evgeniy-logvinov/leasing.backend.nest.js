@@ -39,7 +39,7 @@ export class UserService {
   ): Promise<{ message: string; id: number }> {
     const role = await this.roleService.getRole(RoleEnum.ROLE_ADMIN);
     const { email, password } = adminDto;
-
+    console.log('admin', email, password);
     try {
       const user = new User();
       user.email = email;
@@ -152,13 +152,10 @@ export class UserService {
     }
   }
 
-  async changeConfirmEmail(
-    confirmEmailDto: ConfirmEmailDto,
-  ): Promise<{ message: string }> {
-    const { id } = confirmEmailDto;
-
+  async changeConfirmEmail(id: string): Promise<{ message: string }> {
     const user = await this.userRepository.findOne({
-      where: { id },
+      // TODO: change this part
+      where: { id: Number(id) },
     });
 
     if (!user) {

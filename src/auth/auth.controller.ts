@@ -39,10 +39,10 @@ export class AuthController {
 
   @Post('/confirm-email')
   confirmEmail(
-    @Body(ValidationPipe) confirmEmailDto: ConfirmEmailDto,
+    @Body(ValidationPipe) { id }: { id: string },
   ): Promise<{ message: string }> {
-    console.log('confirmEmailDto', confirmEmailDto);
-    return this.authService.confirmEmail(confirmEmailDto);
+    console.log('confirmEmailDto', id);
+    return this.authService.confirmEmail(id);
   }
 
   @Post('/signin')
