@@ -78,3 +78,4 @@ Check editing for fields only for confirmed users
 Change for UUID all ids
 If user already confirmed we need to show error message
 Change role_id to roleId field when we will refresh the db
+Verification case when email send but not confirmed
