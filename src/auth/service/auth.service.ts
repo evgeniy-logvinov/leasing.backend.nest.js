@@ -47,11 +47,15 @@ export class AuthService {
     return this.userService.changeConfirmEmail(id);
   }
 
-  async signIn(signInCredentialsDto: SignInCredentialsDto): Promise<{
+  async sendConfirmEmail(email: string): Promise<{ message: string }> {
+    const user = await this.userService.findOneByEmail({ email });
+    await this.emailService.sendConfirmationEmail(user.id, email);
+    return { message: 'Email send' };
+  }
+
+  async logIn(signInCredentialsDto: SignInCredentialsDto): Promise<{
     accessToken: string;
     user: JwtPayload;
-    role: string;
-    permissions: string[];
   }> {
     const payload = await this.userService.validateUserPassword(
       signInCredentialsDto,
@@ -61,8 +65,6 @@ export class AuthService {
     return {
       accessToken,
       user: payload,
-      permissions: payload.permissions,
-      role: payload.role,
     };
   }
 }

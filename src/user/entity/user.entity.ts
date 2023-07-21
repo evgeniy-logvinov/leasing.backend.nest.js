@@ -29,7 +29,7 @@ export class User {
   @Column({ nullable: true, select: false })
   resetPasswordId: string;
 
-  @Column({ default: false, select: false })
+  @Column({ default: false })
   isEmailConfirmed: boolean;
 
   @Column({ nullable: true })
@@ -42,7 +42,7 @@ export class User {
   @CreateDateColumn({ type: 'timestamp' })
   updatedDate: Date;
 
-  @ManyToOne((type) => Role, (role) => role.id, {
+  @ManyToOne(() => Role, (role) => role.id, {
     eager: true,
   })
   // TODO: Change to roleId

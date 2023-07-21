@@ -13,10 +13,11 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api/v1');
   const config = new DocumentBuilder()
-    .setTitle('Leasing')
-    .setDescription('The laesing API description')
+    .addBearerAuth()
+    .setTitle('Leasing backend APP')
+    .setDescription('Leasing backend API documentation')
     .setVersion('1.0')
-    .addTag('leasing')
+    .addTag('Leasing')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

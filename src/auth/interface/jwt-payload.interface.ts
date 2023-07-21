@@ -5,4 +5,5 @@ export interface JwtPayload {
   email: string;
   role: RoleEnum;
   permissions: PermissionEnum[];
+  confirmed: boolean;
 }

@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtPayload } from 'src/auth/interface/jwt-payload.interface';
-import { ConfirmEmailDto } from './dto/confirm-email.dto';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
@@ -51,7 +50,12 @@ export class UserService {
 
       return { message: 'User successfully created !', id: user.id };
     } catch (error) {
+      // For postgresql
       if (error.code === '23505') {
+        throw new ConflictException('Email already exists');
+      }
+      // For mysql
+      if (error.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('Email already exists');
       }
 
@@ -109,18 +113,19 @@ export class UserService {
     resetPasswordDto: ResetPasswordDto,
   ): Promise<{ message: string }> {
     const { password, id } = resetPasswordDto;
+
     const user = await this.userRepository.findOne({
       where: { resetPasswordId: id },
     });
 
     if (!user) {
-      throw new NotFoundException(`This reset request ${id} is not found`);
+      throw new NotFoundException(`User don't ask reset the password`);
     }
 
     try {
       user.salt = await bcrypt.genSalt();
       user.password = await this.hashPassword(password, user.salt);
-
+      user.resetPasswordId = null;
       await this.userRepository.save(user);
 
       return { message: 'Password reset!' };
@@ -146,7 +151,7 @@ export class UserService {
 
       await this.userRepository.save(user);
 
-      return { message: 'Password reset!', resetId: user.resetPasswordId };
+      return { message: 'Email send!', resetId: user.resetPasswordId };
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -182,13 +187,18 @@ export class UserService {
     signInCredentialsDto: SignInCredentialsDto,
   ): Promise<JwtPayload> {
     const { email, password } = signInCredentialsDto;
-    const auth = await this.userRepository.findOne({ where: { email } });
-
+    const auth = await this.userRepository.findOne({
+      where: { email },
+      relations: {
+        role: { permissions: true },
+      },
+    });
     if (auth && (await auth.validatePassword(password))) {
       return {
         email: auth.email,
         role: auth.role.name,
-        permissions: auth.role.permissions.map((perm) => perm.name),
+        permissions: auth.role?.permissions?.map((perm) => perm.name),
+        confirmed: auth.isEmailConfirmed,
       };
     } else {
       throw new UnauthorizedException('Invalid credentials');

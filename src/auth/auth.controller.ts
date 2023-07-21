@@ -1,6 +1,5 @@
 import { Post, Body, ValidationPipe, Controller } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ConfirmEmailDto } from 'src/user/dto/confirm-email.dto';
 import { CreateAdminDto } from 'src/user/dto/create-admin.dto';
 import { ResetPasswordDto } from 'src/user/dto/reset-password.dto';
 import { ResetRequiredDto } from 'src/user/dto/reset-required.dto';
@@ -45,11 +44,19 @@ export class AuthController {
     return this.authService.confirmEmail(id);
   }
 
-  @Post('/signin')
+  @Post('/send-confirm-email')
+  sendConfirmEmail(
+    @Body(ValidationPipe) { email }: { email: string },
+  ): Promise<{ message: string }> {
+    console.log('email', email);
+    return this.authService.sendConfirmEmail(email);
+  }
+
+  @Post('/login')
   signIn(
     @Body(ValidationPipe) signinCredentialsDto: SignInCredentialsDto,
   ): Promise<{ accessToken: string; user: JwtPayload }> {
     console.log('signinCredentialsDto', signinCredentialsDto);
-    return this.authService.signIn(signinCredentialsDto);
+    return this.authService.logIn(signinCredentialsDto);
   }
 }

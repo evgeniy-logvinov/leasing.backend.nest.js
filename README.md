@@ -71,3 +71,10 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+# Future fixes
+
+Check editing for fields only for confirmed users
+Change for UUID all ids
+If user already confirmed we need to show error message
+Change role_id to roleId field when we will refresh the db
