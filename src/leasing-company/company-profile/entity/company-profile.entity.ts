@@ -21,5 +21,11 @@ export class CompanyProfile {
   state: CompanyStateEnum;
 
   @Column()
+  accreditation: boolean;
+
+  @Column({ default: 'some link' })
+  agreement: string;
+
+  @Column()
   inn: string;
 }

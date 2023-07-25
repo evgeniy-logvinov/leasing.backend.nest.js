@@ -193,4 +193,20 @@ export class LeasingCompanyService {
       throw new InternalServerErrorException(`Can't unblock user`);
     }
   }
+
+  async accreditation(
+    id: number,
+    accreditation: boolean,
+  ): Promise<CompanyProfile> {
+    try {
+      await this.companyProfileRepository.update(id, {
+        accreditation,
+      });
+
+      return this.companyProfileRepository.findOne({ where: { id } });
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerErrorException(`Can't unblock user`);
+    }
+  }
 }

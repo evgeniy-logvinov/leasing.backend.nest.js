@@ -21,7 +21,7 @@ export class Application {
   isNew: boolean;
 
   @Column({ nullable: true })
-  isReturnable: boolean;
+  returnable: boolean;
 
   @Column({
     type: 'enum',

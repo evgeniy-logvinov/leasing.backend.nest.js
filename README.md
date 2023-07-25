@@ -85,3 +85,4 @@ Locked user
 Global error handler to show correct errors and show eeror in console
 Lenght for inn in dto
 Save description only when it was changed
+Translate project

@@ -82,6 +82,16 @@ export class LeasingCompanyController {
     return this.leasingCompanyService.unblock(id);
   }
 
+  @Post('/accreditation/:id')
+  async accreditation(
+    @Req() req: Request,
+    @Param('id') id: number,
+    @Body(ValidationPipe) { accreditation }: { accreditation: boolean },
+  ): Promise<CompanyProfile> {
+    await this.adminCheck(req);
+    return this.leasingCompanyService.accreditation(id, accreditation);
+  }
+
   async adminCheck(req: Request) {
     const userId = getUserIdFromReq(req);
     const admin = await this.userService.adminRole(userId);
