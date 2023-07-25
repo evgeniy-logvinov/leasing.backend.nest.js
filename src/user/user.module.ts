@@ -6,20 +6,10 @@ import { User } from './entity/user.entity';
 import { Role } from './role/entity/role.entity';
 import { Permission } from './permission/entity/permission.entity';
 import { UserController } from './user.controller';
-import { LeasingClient } from 'src/leasing-client/entity/leasing-client.entity';
-import { ClientProfile } from 'src/leasing-client/client-profile/entity/client-profile.entity';
 
 @Global()
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      User,
-      Role,
-      Permission,
-      LeasingClient,
-      ClientProfile,
-    ]),
-  ],
+  imports: [TypeOrmModule.forFeature([User, Role, Permission])],
   controllers: [UserController],
   providers: [UserService, RoleService],
   exports: [UserService],

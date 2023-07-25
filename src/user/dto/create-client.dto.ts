@@ -7,7 +7,7 @@ import {
   Length,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class CreateClientDto {
   @ApiProperty({ minimum: 4, maximum: 50 })
   @IsEmail()
   @IsNotEmpty()

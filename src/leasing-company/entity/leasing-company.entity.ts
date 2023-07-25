@@ -1,4 +1,6 @@
+import { User } from 'src/user/entity/user.entity';
 import {
+  Column,
   Entity,
   Generated,
   JoinColumn,
@@ -15,6 +17,10 @@ export class LeasingCompany {
   @Generated('increment')
   id: number;
 
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User;
+
   @OneToOne(() => PreferenceFilter)
   @JoinColumn()
   preferenceFilter: PreferenceFilter;
@@ -23,7 +29,13 @@ export class LeasingCompany {
   @JoinColumn()
   infrastructure: Infrastructure;
 
-  @OneToOne(() => Infrastructure)
+  @OneToOne(() => CompanyProfile)
   @JoinColumn()
   companyProfile: CompanyProfile;
+
+  @Column({ default: '' })
+  description: string;
+
+  @Column({ nullable: true, select: false })
+  inviteId: string;
 }

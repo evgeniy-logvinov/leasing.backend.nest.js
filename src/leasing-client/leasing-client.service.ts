@@ -1,23 +1,31 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EmailService } from 'src/email/services/email.service';
-import { User } from 'src/user/entity/user.entity';
 import { ClientStateEnum } from 'src/user/enum/ClientStateEnum';
 import { Repository } from 'typeorm';
 import { ClientProfile } from './client-profile/entity/client-profile.entity';
 import { LeasingClient } from './entity/leasing-client.entity';
 import { v4 as uuidv4 } from 'uuid';
+import { CreateClientDto } from 'src/user/dto/create-client.dto';
+import { RoleEnum } from 'src/user/enum/RoleEnum';
+import { User } from 'src/user/entity/user.entity';
+import { RoleService } from 'src/user/role/role.service';
 
 @Injectable()
 export class LeasingClientService {
   constructor(
     @InjectRepository(LeasingClient)
-    private userRepository: Repository<User>,
-    @InjectRepository(LeasingClient)
     private leasingClientRepository: Repository<LeasingClient>,
     @InjectRepository(ClientProfile)
     private clientProfileRepository: Repository<ClientProfile>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
     private emailService: EmailService,
+    private roleService: RoleService,
   ) {}
 
   getAll(): Promise<LeasingClient[]> {
@@ -33,6 +41,41 @@ export class LeasingClientService {
         user: true,
       },
     });
+  }
+
+  async createClient(newClient: CreateClientDto): Promise<{ message: string }> {
+    const role = await this.roleService.getRole(RoleEnum.ROLE_LEASING_CLIENT);
+    const { email, name, inn } = newClient;
+
+    try {
+      const user = new User();
+      user.email = email;
+      user.role = role;
+      await this.userRepository.save(user);
+
+      const clientProfile = new ClientProfile();
+      clientProfile.fullName = name;
+      clientProfile.inn = inn;
+      await this.clientProfileRepository.save(clientProfile);
+
+      const leasingClient = new LeasingClient();
+      leasingClient.clientProfile = clientProfile;
+      leasingClient.user = user;
+      await this.leasingClientRepository.save(leasingClient);
+
+      return { message: 'User successfully created !' };
+    } catch (error) {
+      // postgresql
+      if (error.code === '23505') {
+        throw new ConflictException('Email already exists');
+      }
+      // For mysql
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException('Email already exists');
+      }
+      console.log('err', error);
+      throw new InternalServerErrorException();
+    }
   }
 
   async setDescription(
@@ -63,13 +106,19 @@ export class LeasingClientService {
         relations: { user: true },
         where: { clientProfile: { id } },
       });
-      const inviteId = uuidv4();
-      this.leasingClientRepository.update(client.id, { inviteId });
+      const resetPasswordId = uuidv4();
+      await this.userRepository.update(client.user.id, {
+        resetPasswordId,
+        isEmailConfirmed: true,
+      });
       await this.clientProfileRepository.update(id, {
         state: ClientStateEnum.INVITED,
       });
 
-      await this.emailService.sendInviteEmail(inviteId, client.user.email);
+      await this.emailService.sendResetEmail(
+        resetPasswordId,
+        client.user.email,
+      );
       return this.clientProfileRepository.findOne({ where: { id } });
     } catch (err) {
       console.log(err);

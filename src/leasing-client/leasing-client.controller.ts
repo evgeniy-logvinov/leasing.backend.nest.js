@@ -12,6 +12,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
+import { CreateClientDto } from 'src/user/dto/create-client.dto';
 import { UserService } from 'src/user/user.service';
 import { getUserIdFromReq } from 'src/utils/user';
 import { ClientProfile } from './client-profile/entity/client-profile.entity';
@@ -30,12 +31,17 @@ export class LeasingClientController {
 
   @Get()
   async getLeasingClient(@Req() req: Request): Promise<LeasingClient[]> {
-    const userId = getUserIdFromReq(req);
-    const admin = await this.userService.adminRole(userId);
-    if (!admin) {
-      throw new ForbiddenException('Access denied');
-    }
+    await this.adminCheck(req);
     return this.leasingClientService.getAll();
+  }
+
+  @Post()
+  async createClient(
+    @Req() req: Request,
+    @Body(ValidationPipe) user: CreateClientDto,
+  ): Promise<{ message: string }> {
+    await this.adminCheck(req);
+    return this.leasingClientService.createClient(user);
   }
 
   @Post('/description')
@@ -45,11 +51,7 @@ export class LeasingClientController {
     @Body(ValidationPipe)
     { id, description }: { id: number; description: string },
   ): Promise<{ message: string }> {
-    const userId = getUserIdFromReq(req);
-    const admin = await this.userService.adminRole(userId);
-    if (!admin) {
-      throw new ForbiddenException('Access denied');
-    }
+    await this.adminCheck(req);
     return this.leasingClientService.setDescription(id, description);
   }
 
@@ -58,11 +60,7 @@ export class LeasingClientController {
     @Req() req: Request,
     @Param('id') id: number,
   ): Promise<ClientProfile> {
-    const userId = getUserIdFromReq(req);
-    const admin = await this.userService.adminRole(userId);
-    if (!admin) {
-      throw new ForbiddenException('Access denied');
-    }
+    await this.adminCheck(req);
     return this.leasingClientService.invite(id);
   }
 
@@ -71,11 +69,7 @@ export class LeasingClientController {
     @Req() req: Request,
     @Param('id') id: number,
   ): Promise<ClientProfile> {
-    const userId = getUserIdFromReq(req);
-    const admin = await this.userService.adminRole(userId);
-    if (!admin) {
-      throw new ForbiddenException('Access denied');
-    }
+    await this.adminCheck(req);
     return this.leasingClientService.block(id);
   }
 
@@ -84,11 +78,15 @@ export class LeasingClientController {
     @Req() req: Request,
     @Param('id') id: number,
   ): Promise<ClientProfile> {
+    await this.adminCheck(req);
+    return this.leasingClientService.unblock(id);
+  }
+
+  async adminCheck(req: Request) {
     const userId = getUserIdFromReq(req);
     const admin = await this.userService.adminRole(userId);
     if (!admin) {
       throw new ForbiddenException('Access denied');
     }
-    return this.leasingClientService.unblock(id);
   }
 }

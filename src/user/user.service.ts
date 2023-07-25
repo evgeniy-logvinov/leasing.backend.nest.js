@@ -8,7 +8,6 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtPayload } from 'src/auth/interface/jwt-payload.interface';
 import { CreateAdminDto } from './dto/create-admin.dto';
-import { CreateUserDto } from './dto/create-user.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import { ResetRequiredDto } from './dto/reset-required.dto';
 import { SignInCredentialsDto } from './dto/signin-credentials.dto';
@@ -20,18 +19,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { Repository } from 'typeorm';
 import { Role } from './role/entity/role.entity';
 import { Permission } from './permission/entity/permission.entity';
-import { ClientProfile } from 'src/leasing-client/client-profile/entity/client-profile.entity';
-import { LeasingClient } from 'src/leasing-client/entity/leasing-client.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    @InjectRepository(LeasingClient)
-    private leasingClientRepository: Repository<LeasingClient>,
-    @InjectRepository(ClientProfile)
-    private clientProfileRepository: Repository<ClientProfile>,
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
     @InjectRepository(Permission)
@@ -62,66 +55,6 @@ export class UserService {
       }
       // For mysql
       if (error.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException('Email already exists');
-      }
-
-      throw new InternalServerErrorException();
-    }
-  }
-
-  async createClient(
-    userDto: CreateUserDto,
-  ): Promise<{ message: string; user: User }> {
-    const role = await this.roleService.getRole(RoleEnum.ROLE_LEASING_CLIENT);
-    const { email, name, inn } = userDto;
-    console.log('email, name, inn', email, name, inn);
-    try {
-      const user = new User();
-      user.email = email;
-      user.role = role;
-      await this.userRepository.save(user);
-
-      const clientProfile = new ClientProfile();
-      clientProfile.fullName = name;
-      clientProfile.inn = inn;
-      await this.clientProfileRepository.save(clientProfile);
-
-      const leasingClient = new LeasingClient();
-      leasingClient.clientProfile = clientProfile;
-      leasingClient.user = user;
-      await this.leasingClientRepository.save(leasingClient);
-
-      return { message: 'User successfully created !', user };
-    } catch (error) {
-      // postgresql
-      if (error.code === '23505') {
-        throw new ConflictException('Email already exists');
-      }
-      // For mysql
-      if (error.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException('Email already exists');
-      }
-      console.log('err', error);
-      throw new InternalServerErrorException();
-    }
-  }
-
-  async createCompany(
-    userDto: CreateUserDto,
-  ): Promise<{ message: string; user: User }> {
-    const role = await this.roleService.getRole(RoleEnum.ROLE_LEASING_COMPANY);
-    const { email } = userDto;
-
-    try {
-      const user = new User();
-      user.email = email;
-      user.role = role;
-
-      await this.userRepository.save(user);
-
-      return { message: 'User successfully created !', user };
-    } catch (error) {
-      if (error.code === '23505') {
         throw new ConflictException('Email already exists');
       }
 

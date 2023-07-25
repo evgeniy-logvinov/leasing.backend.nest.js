@@ -82,4 +82,6 @@ Verification case when email send but not confirmed
 Remove token when signup because we need only use login page to entry dashboard
 Cover userInfo into token
 Locked user
-Global error handler
+Global error handler to show correct errors and show eeror in console
+Lenght for inn in dto
+Save description only when it was changed
