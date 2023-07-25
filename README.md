@@ -79,3 +79,7 @@ Change for UUID all ids
 If user already confirmed we need to show error message
 Change role_id to roleId field when we will refresh the db
 Verification case when email send but not confirmed
+Remove token when signup because we need only use login page to entry dashboard
+Cover userInfo into token
+Locked user
+Global error handler

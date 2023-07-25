@@ -43,7 +43,7 @@ export class User {
   updatedDate: Date;
 
   @ManyToOne(() => Role, (role) => role.id, {
-    eager: true,
+    // eager: true,
   })
   // TODO: Change to roleId
   @JoinColumn({ name: 'role_id' })

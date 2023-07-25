@@ -1,4 +1,6 @@
+import { User } from 'src/user/entity/user.entity';
 import {
+  Column,
   Entity,
   Generated,
   JoinColumn,
@@ -15,9 +17,19 @@ export class LeasingClient {
   @Generated('increment')
   id: number;
 
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User;
+
   @OneToOne(() => ClientProfile)
   @JoinColumn()
   clientProfile: ClientProfile;
+
+  @Column({ default: '' })
+  description: string;
+
+  @Column({ nullable: true, select: false })
+  inviteId: string;
 
   @OneToMany(() => Application, (item) => item.client)
   applications: Application[];

@@ -20,12 +20,18 @@ import { v4 as uuidv4 } from 'uuid';
 import { Repository } from 'typeorm';
 import { Role } from './role/entity/role.entity';
 import { Permission } from './permission/entity/permission.entity';
+import { ClientProfile } from 'src/leasing-client/client-profile/entity/client-profile.entity';
+import { LeasingClient } from 'src/leasing-client/entity/leasing-client.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(LeasingClient)
+    private leasingClientRepository: Repository<LeasingClient>,
+    @InjectRepository(ClientProfile)
+    private clientProfileRepository: Repository<ClientProfile>,
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
     @InjectRepository(Permission)
@@ -67,21 +73,35 @@ export class UserService {
     userDto: CreateUserDto,
   ): Promise<{ message: string; user: User }> {
     const role = await this.roleService.getRole(RoleEnum.ROLE_LEASING_CLIENT);
-    const { email } = userDto;
-
+    const { email, name, inn } = userDto;
+    console.log('email, name, inn', email, name, inn);
     try {
       const user = new User();
       user.email = email;
       user.role = role;
-
       await this.userRepository.save(user);
+
+      const clientProfile = new ClientProfile();
+      clientProfile.fullName = name;
+      clientProfile.inn = inn;
+      await this.clientProfileRepository.save(clientProfile);
+
+      const leasingClient = new LeasingClient();
+      leasingClient.clientProfile = clientProfile;
+      leasingClient.user = user;
+      await this.leasingClientRepository.save(leasingClient);
 
       return { message: 'User successfully created !', user };
     } catch (error) {
+      // postgresql
       if (error.code === '23505') {
         throw new ConflictException('Email already exists');
       }
-
+      // For mysql
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException('Email already exists');
+      }
+      console.log('err', error);
       throw new InternalServerErrorException();
     }
   }
@@ -237,5 +257,13 @@ export class UserService {
 
   getAllPermissions(): Promise<Permission[]> {
     return this.permissionRepository.find();
+  }
+
+  async adminRole(userId: number): Promise<boolean> {
+    const user = await this.userRepository.findOne({
+      relations: { role: true },
+      where: { id: Number(userId) },
+    });
+    return user.role.name === 'ROLE_ADMIN';
   }
 }

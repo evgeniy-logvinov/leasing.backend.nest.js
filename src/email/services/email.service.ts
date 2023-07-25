@@ -18,11 +18,11 @@ export class EmailService {
     );
   }
 
-  sendInviteEmail(resetId: string, email: string): void {
+  sendInviteEmail(inviteId: string, email: string): void {
     console.log(
       'invite link',
       email,
-      `${process.env.BASE_URL_FE}${process.env.RESET_PASSWORD_PATH_FE}${resetId}`,
+      `${process.env.BASE_URL_FE}${process.env.INVITE_CLIENT_PATH_FE}${inviteId}`,
     );
   }
 }
