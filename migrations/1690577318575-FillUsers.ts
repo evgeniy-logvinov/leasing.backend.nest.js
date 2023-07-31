@@ -2,6 +2,7 @@ import { RoleEnum } from 'src/user/enum/RoleEnum';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
+import { UserEmails } from './constants';
 
 interface User {
   role: RoleEnum;
@@ -17,52 +18,57 @@ export class FillUsers1690577318575 implements MigrationInterface {
     const users: User[] = [
       {
         role: RoleEnum.ROLE_ADMIN,
-        email: 'adminEmailConfirmed@gmail.com',
+        email: UserEmails.ADMIN_CONFIRMED,
         isEmailConfirmed: 1,
       },
       {
         role: RoleEnum.ROLE_ADMIN,
-        email: 'adminEmailNotConfirmed@gmail.com',
+        email: UserEmails.ADMIN_NOT_CONFIRMED,
         isEmailConfirmed: 0,
       },
       {
         role: RoleEnum.ROLE_LEASING_CLIENT,
-        email: 'clientUserEmail@gmail.com',
+        email: UserEmails.CLIENT_EMPTY,
         isEmailConfirmed: 1,
       },
       {
         role: RoleEnum.ROLE_LEASING_CLIENT,
-        email: 'clientUserFilledEmail@gmail.com',
+        email: UserEmails.CLIENT_FILLED,
         isEmailConfirmed: 1,
       },
       {
         role: RoleEnum.ROLE_LEASING_COMPANY,
-        email: 'companyUserEmail@gmail.com',
+        email: UserEmails.COMPANY_EMPTY,
+        isEmailConfirmed: 1,
+      },
+      {
+        role: RoleEnum.ROLE_LEASING_COMPANY,
+        email: UserEmails.COMPANY_FILLED,
         isEmailConfirmed: 1,
       },
       {
         role: RoleEnum.ROLE_LEASING_COMPANY_HEAD_OF_SALES,
-        email: 'headOfSales@gmail.com',
+        email: UserEmails.COMPANY_HEAD_OF_SALES,
         isEmailConfirmed: 1,
       },
       {
         role: RoleEnum.ROLE_LEASING_COMPANY_HEAD_OF_ANALITICS,
-        email: 'headOfAnalitics@gmail.com',
+        email: UserEmails.COMPANY_HEAD_OF_ANALITIS,
         isEmailConfirmed: 1,
       },
       {
         role: RoleEnum.ROLE_LEASING_COMPANY_ANALITIC,
-        email: 'companyAnalitic@gmail.com',
+        email: UserEmails.COMPANY_ANALITIC,
         isEmailConfirmed: 1,
       },
       {
         role: RoleEnum.ROLE_LEASING_COMPANY_REGION_MANAGER,
-        email: 'companyRegionManager@gmail.com',
+        email: UserEmails.COMPANY_REGION_MANAGER,
         isEmailConfirmed: 1,
       },
       {
         role: RoleEnum.ROLE_LEASING_COMPANY_SALES,
-        email: 'companySales@gmail.com',
+        email: UserEmails.COMPANY_SALES,
         isEmailConfirmed: 1,
       },
     ];

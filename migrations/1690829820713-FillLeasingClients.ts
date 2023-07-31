@@ -1,11 +1,16 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { ClientNames, LeasingClientsDescription } from './constants';
+import {
+  ClientNames,
+  LeasingClientsDescription,
+  UserEmails,
+} from './constants';
 import { v4 as uuidv4 } from 'uuid';
 
 interface LeasingClientSql {
   description: string;
   inviteId?: string;
   clientName: string;
+  email: UserEmails;
 }
 
 export class FillLeasingClients1690829820713 implements MigrationInterface {
@@ -13,39 +18,42 @@ export class FillLeasingClients1690829820713 implements MigrationInterface {
     const clients: LeasingClientSql[] = [
       {
         description: 'Dumb client unreg 1',
-        clientName: ClientNames.UNREG_1,
-      },
-      {
-        description: 'Dumb client unreg 2',
-        clientName: ClientNames.UNREG_2,
+        clientName: ClientNames.UNREG,
+        email: UserEmails.CLIENT_EMPTY,
       },
       {
         description: LeasingClientsDescription.REG,
-        clientName: ClientNames.REG,
+        clientName: ClientNames.REG_FILLED,
+        email: UserEmails.CLIENT_FILLED,
       },
       {
         description: LeasingClientsDescription.REG_EMPTY,
-        clientName: ClientNames.REG,
+        clientName: ClientNames.REG_EMPTY,
+        email: UserEmails.CLIENT_EMPTY,
       },
       {
         description: 'Dumb client blocked',
         clientName: ClientNames.BLOCKED,
+        email: UserEmails.CLIENT_BLOCKED,
       },
       {
         description: 'Dumb client invited',
         clientName: ClientNames.INVITED,
         inviteId: uuidv4(),
+        email: UserEmails.CLIENT_INVITED,
       },
     ];
 
     clients.forEach((client) => {
       queryRunner.query(
-        `INSERT INTO leasing_client (clientProfileId, description, inviteId, id)
-                  SELECT id, '${client.description}', '${
+        `INSERT INTO leasing_client (clientProfileId, description, inviteId, userId, id)
+                  SELECT client_profile.id, '${client.description}', '${
           client.inviteId
-        }', '${uuidv4()}'
-                  FROM client_profile
-                  WHERE client_profile.fullName = '${client.clientName}'`,
+        }', user.id, '${uuidv4()}'
+                  FROM client_profile, user
+                  WHERE client_profile.fullName = '${
+                    client.clientName
+                  }' and user.email = '${client.email}'`,
       );
     });
   }

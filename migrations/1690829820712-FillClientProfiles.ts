@@ -9,21 +9,14 @@ export class FillClientProfiles1690829820712 implements MigrationInterface {
     const profiles: ClientProfile[] = [
       {
         id: uuidv4(),
-        fullName: ClientNames.UNREG_1,
+        fullName: ClientNames.UNREG,
         shortName: 'DUDIS',
         inn: '1234567891',
         state: ClientStateEnum.UNREG,
       },
       {
         id: uuidv4(),
-        fullName: ClientNames.UNREG_2,
-        shortName: 'UUDIS',
-        inn: '1234567890',
-        state: ClientStateEnum.UNREG,
-      },
-      {
-        id: uuidv4(),
-        fullName: ClientNames.REG,
+        fullName: ClientNames.REG_FILLED,
         shortName: 'RUDIS',
         inn: '1234567892',
         state: ClientStateEnum.REG,
