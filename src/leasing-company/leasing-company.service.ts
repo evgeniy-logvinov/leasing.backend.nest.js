@@ -111,7 +111,7 @@ export class LeasingCompanyService {
   }
 
   async setDescription(
-    id: number,
+    id: string,
     description: string,
   ): Promise<{ message: string }> {
     try {
@@ -122,7 +122,7 @@ export class LeasingCompanyService {
     }
   }
 
-  async invite(id: number): Promise<CompanyProfile> {
+  async invite(id: string): Promise<CompanyProfile> {
     try {
       const profile = await this.companyProfileRepository.findOne({
         where: { id },
@@ -160,7 +160,7 @@ export class LeasingCompanyService {
     }
   }
 
-  async block(id: number): Promise<CompanyProfile> {
+  async block(id: string): Promise<CompanyProfile> {
     try {
       const profile = await this.companyProfileRepository.findOne({
         where: { id },
@@ -181,7 +181,7 @@ export class LeasingCompanyService {
     }
   }
 
-  async unblock(id: number): Promise<CompanyProfile> {
+  async unblock(id: string): Promise<CompanyProfile> {
     try {
       await this.companyProfileRepository.update(id, {
         state: CompanyStateEnum.REG,
@@ -195,7 +195,7 @@ export class LeasingCompanyService {
   }
 
   async accreditation(
-    id: number,
+    id: string,
     accreditation: boolean,
   ): Promise<CompanyProfile> {
     try {

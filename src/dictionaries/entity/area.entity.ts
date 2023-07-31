@@ -1,20 +1,10 @@
-import {
-  Column,
-  Entity,
-  Generated,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Country } from './country.entity';
 import { District } from './district.entity';
 
 @Entity()
-export class Area {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class Area extends LeasingEntity {
   @Column()
   name: string;
 

@@ -1,18 +1,9 @@
-import {
-  Column,
-  Entity,
-  Generated,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { Area } from './area.entity';
 
 @Entity()
-export class Country {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class Country extends LeasingEntity {
   @Column()
   name: string;
 

@@ -1,18 +1,9 @@
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
 import { Application } from 'src/leasing-client/application/entity/application.entity';
-import {
-  Column,
-  Entity,
-  Generated,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 
 @Entity()
-export class CommercialProposal {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class CommercialProposal extends LeasingEntity {
   @ManyToOne(() => Application, (item) => item.commercialProposal)
   application: Application;
 

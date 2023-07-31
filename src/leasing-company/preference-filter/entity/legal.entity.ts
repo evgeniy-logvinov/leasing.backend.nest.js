@@ -1,11 +1,8 @@
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { Column, Entity } from 'typeorm';
 
 @Entity()
-export class Legal {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class Legal extends LeasingEntity {
   @Column({ default: true })
   hasLegalEntity: boolean;
 

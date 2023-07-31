@@ -1,22 +1,12 @@
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
 import { LeasingClient } from 'src/leasing-client/entity/leasing-client.entity';
 import { CommercialProposal } from 'src/leasing-company/commercial-proposal/entity/commercial-proposal.entity';
-import {
-  Column,
-  Entity,
-  Generated,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { TypeOfLeasingSubjectEnum } from '../enum/TypeOfLeasingSubjectEnum';
 import { TypeOfSupplierEnum } from '../enum/TypeOfSupplierEnum';
 
 @Entity()
-export class Application {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class Application extends LeasingEntity {
   @Column()
   isNew: boolean;
 

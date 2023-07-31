@@ -1,19 +1,9 @@
-import {
-  Column,
-  Entity,
-  Generated,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { Gk } from './gk.entity';
 
 @Entity()
-export class SubCompany {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class SubCompany extends LeasingEntity {
   @Column()
   accreditation: boolean;
 

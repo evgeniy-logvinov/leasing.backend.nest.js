@@ -1,20 +1,10 @@
-import {
-  Column,
-  Entity,
-  Generated,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { Ip } from './ip.entity';
 import { Legal } from './legal.entity';
 
 @Entity()
-export class CriteriaFinancedHolding {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class CriteriaFinancedHolding extends LeasingEntity {
   @Column()
   maxCountOfMonth: number;
 

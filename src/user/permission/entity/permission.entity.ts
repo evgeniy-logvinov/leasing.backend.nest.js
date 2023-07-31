@@ -1,20 +1,10 @@
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
 import { PermissionEnum } from 'src/user/enum/PermissionEnum';
 import { Role } from 'src/user/role/entity/role.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Generated,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToMany } from 'typeorm';
 
 @Entity()
-export class Permission {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class Permission extends LeasingEntity {
   @Column({
     type: 'enum',
     enum: PermissionEnum,

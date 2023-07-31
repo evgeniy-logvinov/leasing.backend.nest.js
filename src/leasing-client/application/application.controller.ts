@@ -2,6 +2,7 @@ import {
   Controller,
   ForbiddenException,
   Get,
+  InternalServerErrorException,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -23,10 +24,26 @@ export class ApplicationController {
     private readonly userService: UserService,
   ) {}
 
+  // TODO: check roles
   @Get()
   async getApplications(@Req() req: Request): Promise<Application[]> {
-    await this.adminCheck(req);
-    return this.applicationService.getAll();
+    const userId = getUserIdFromReq(req);
+    const admin = await this.userService.adminRole(userId);
+    const client = await this.userService.clientRole(userId);
+
+    if (!admin && !client) {
+      throw new ForbiddenException('Access denied');
+    }
+
+    if (admin) {
+      return this.applicationService.getAll();
+    }
+
+    if (client) {
+      return this.applicationService.getAllByUserId(userId);
+    }
+
+    throw new ForbiddenException('Access denied');
   }
 
   async adminCheck(req: Request) {

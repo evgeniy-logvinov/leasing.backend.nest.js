@@ -2,23 +2,18 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { Role } from '../role/entity/role.entity';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
 
 @Entity()
 @Unique(['email'])
-export class User {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class User extends LeasingEntity {
   @Column({ type: 'varchar' })
   email: string;
 
@@ -42,11 +37,8 @@ export class User {
   @CreateDateColumn({ type: 'timestamp' })
   updatedDate: Date;
 
-  @ManyToOne(() => Role, (role) => role.id, {
-    // eager: true,
-  })
-  // TODO: Change to roleId
-  @JoinColumn({ name: 'role_id' })
+  @ManyToOne(() => Role, (role) => role.id)
+  @JoinColumn()
   role: Role;
 
   async validatePassword(password: string): Promise<boolean> {

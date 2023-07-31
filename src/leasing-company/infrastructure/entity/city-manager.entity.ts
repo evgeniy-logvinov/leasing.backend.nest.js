@@ -1,22 +1,11 @@
-import {
-  Entity,
-  Generated,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 import { Employee } from './employee.entity';
 import { Manager } from './manager.entity';
 import { SalesDepartment } from './sales-department.entity';
 
 @Entity()
-export class CityManager {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class CityManager extends LeasingEntity {
   @ManyToOne(() => SalesDepartment, (item) => item.cityManager)
   salesDepartment: SalesDepartment;
 

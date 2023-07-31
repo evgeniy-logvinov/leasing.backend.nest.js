@@ -49,7 +49,7 @@ export class LeasingCompanyController {
     @Req() req: Request,
 
     @Body(ValidationPipe)
-    { id, description }: { id: number; description: string },
+    { id, description }: { id: string; description: string },
   ): Promise<{ message: string }> {
     await this.adminCheck(req);
     return this.leasingCompanyService.setDescription(id, description);
@@ -58,7 +58,7 @@ export class LeasingCompanyController {
   @Post('/invite/:id')
   async invite(
     @Req() req: Request,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ): Promise<CompanyProfile> {
     await this.adminCheck(req);
     return this.leasingCompanyService.invite(id);
@@ -67,7 +67,7 @@ export class LeasingCompanyController {
   @Post('/block/:id')
   async block(
     @Req() req: Request,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ): Promise<CompanyProfile> {
     await this.adminCheck(req);
     return this.leasingCompanyService.block(id);
@@ -76,7 +76,7 @@ export class LeasingCompanyController {
   @Post('/unblock/:id')
   async unblock(
     @Req() req: Request,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ): Promise<CompanyProfile> {
     await this.adminCheck(req);
     return this.leasingCompanyService.unblock(id);
@@ -85,7 +85,7 @@ export class LeasingCompanyController {
   @Post('/accreditation/:id')
   async accreditation(
     @Req() req: Request,
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body(ValidationPipe) { accreditation }: { accreditation: boolean },
   ): Promise<CompanyProfile> {
     await this.adminCheck(req);

@@ -1,12 +1,9 @@
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
 import { CompanyStateEnum } from 'src/user/enum/CompanyStateEnum';
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 @Entity()
-export class CompanyProfile {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class CompanyProfile extends LeasingEntity {
   @Column()
   fullName: string;
 

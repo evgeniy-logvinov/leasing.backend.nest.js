@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { EmailService } from 'src/email/services/email.service';
-import { ConfirmEmailDto } from 'src/user/dto/confirm-email.dto';
 import { CreateAdminDto } from 'src/user/dto/create-admin.dto';
 import { ResetPasswordDto } from 'src/user/dto/reset-password.dto';
 import { ResetRequiredDto } from 'src/user/dto/reset-required.dto';
@@ -25,7 +24,7 @@ export class AuthService {
 
   async signUpAdmin(
     createAdminDto: CreateAdminDto,
-  ): Promise<{ message: string; id: number }> {
+  ): Promise<{ message: string; id: string }> {
     return this.userService.createAdmin(createAdminDto);
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class EmailService {
-  sendConfirmationEmail(userId: number, email: string): void {
+  sendConfirmationEmail(userId: string, email: string): void {
     console.log(
       'confirmation link',
       email,

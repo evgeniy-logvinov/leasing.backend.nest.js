@@ -1,20 +1,10 @@
-import {
-  Entity,
-  Generated,
-  JoinColumn,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { Analitic } from './analitic.entity';
 import { Employee } from './employee.entity';
 
 @Entity()
-export class AnaliticsDepartment {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class AnaliticsDepartment extends LeasingEntity {
   @OneToOne(() => Employee)
   @JoinColumn()
   head: Employee;

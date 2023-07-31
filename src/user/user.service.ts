@@ -34,7 +34,7 @@ export class UserService {
 
   async createAdmin(
     adminDto: CreateAdminDto,
-  ): Promise<{ message: string; id: number }> {
+  ): Promise<{ message: string; id: string }> {
     const role = await this.roleService.getRole(RoleEnum.ROLE_ADMIN);
     const { email, password } = adminDto;
     console.log('admin', email, password);
@@ -113,7 +113,7 @@ export class UserService {
   async changeConfirmEmail(id: string): Promise<{ message: string }> {
     const user = await this.userRepository.findOne({
       // TODO: change this part
-      where: { id: Number(id) },
+      where: { id },
     });
 
     if (!user) {
@@ -167,7 +167,7 @@ export class UserService {
     return user;
   }
 
-  async findOneById({ id }: { id: number }): Promise<User> {
+  async findOneById({ id }: { id: string }): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
 
     if (!user) {
@@ -192,11 +192,19 @@ export class UserService {
     return this.permissionRepository.find();
   }
 
-  async adminRole(userId: number): Promise<boolean> {
+  async adminRole(userId: string): Promise<boolean> {
     const user = await this.userRepository.findOne({
       relations: { role: true },
-      where: { id: Number(userId) },
+      where: { id: userId },
     });
-    return user.role.name === 'ROLE_ADMIN';
+    return user.role.name === RoleEnum.ROLE_ADMIN;
+  }
+
+  async clientRole(userId: string): Promise<boolean> {
+    const user = await this.userRepository.findOne({
+      relations: { role: true },
+      where: { id: userId },
+    });
+    return user.role.name === RoleEnum.ROLE_LEASING_CLIENT;
   }
 }

@@ -4,5 +4,5 @@ import { IsUUID } from 'class-validator';
 export class ConfirmEmailDto {
   @ApiProperty({ description: 'User id' })
   @IsUUID()
-  id: number;
+  id: string;
 }

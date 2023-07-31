@@ -1,21 +1,10 @@
-import {
-  Column,
-  Entity,
-  Generated,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { CriteriaFinancedHolding } from './criteria-financed-holding.entity';
 import { PreferenceFilter } from './preference-filter.entity';
 
 @Entity()
-export class TypesOfFinancedHolding {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class TypesOfFinancedHolding extends LeasingEntity {
   @Column()
   name: string;
 

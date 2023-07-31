@@ -49,7 +49,7 @@ export class LeasingClientController {
     @Req() req: Request,
 
     @Body(ValidationPipe)
-    { id, description }: { id: number; description: string },
+    { id, description }: { id: string; description: string },
   ): Promise<{ message: string }> {
     await this.adminCheck(req);
     return this.leasingClientService.setDescription(id, description);
@@ -58,7 +58,7 @@ export class LeasingClientController {
   @Post('/invite/:id')
   async invite(
     @Req() req: Request,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ): Promise<ClientProfile> {
     await this.adminCheck(req);
     return this.leasingClientService.invite(id);
@@ -67,7 +67,7 @@ export class LeasingClientController {
   @Post('/block/:id')
   async block(
     @Req() req: Request,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ): Promise<ClientProfile> {
     await this.adminCheck(req);
     return this.leasingClientService.block(id);
@@ -76,7 +76,7 @@ export class LeasingClientController {
   @Post('/unblock/:id')
   async unblock(
     @Req() req: Request,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ): Promise<ClientProfile> {
     await this.adminCheck(req);
     return this.leasingClientService.unblock(id);

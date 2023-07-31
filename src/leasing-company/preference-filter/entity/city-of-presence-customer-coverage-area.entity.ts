@@ -1,19 +1,10 @@
 import { City } from 'src/dictionaries/entity/city.entity';
-import {
-  Column,
-  Entity,
-  Generated,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { PreferenceFilter } from './preference-filter.entity';
 
 @Entity()
-export class CityOfPresenceCustomerCoverageArea {
-  @PrimaryGeneratedColumn()
-  @Generated('increment')
-  id: number;
-
+export class CityOfPresenceCustomerCoverageArea extends LeasingEntity {
   @ManyToOne(() => City)
   cities: City;
 

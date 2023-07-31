@@ -79,7 +79,7 @@ export class LeasingClientService {
   }
 
   async setDescription(
-    id: number,
+    id: string,
     description: string,
   ): Promise<{ message: string }> {
     try {
@@ -90,7 +90,7 @@ export class LeasingClientService {
     }
   }
 
-  async invite(id: number): Promise<ClientProfile> {
+  async invite(id: string): Promise<ClientProfile> {
     try {
       const profile = await this.clientProfileRepository.findOne({
         where: { id },
@@ -126,7 +126,7 @@ export class LeasingClientService {
     }
   }
 
-  async block(id: number): Promise<ClientProfile> {
+  async block(id: string): Promise<ClientProfile> {
     try {
       const profile = await this.clientProfileRepository.findOne({
         where: { id },
@@ -147,7 +147,7 @@ export class LeasingClientService {
     }
   }
 
-  async unblock(id: number): Promise<ClientProfile> {
+  async unblock(id: string): Promise<ClientProfile> {
     try {
       await this.clientProfileRepository.update(id, {
         state: ClientStateEnum.REG,
