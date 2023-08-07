@@ -11,10 +11,7 @@ import { CriteriaFinancedHolding } from './entity/criteria-financed-holding.enti
 import { SubjectGuarantee } from './entity/subject-guarantee';
 import { Legal } from './entity/legal.entity';
 import { Ip } from './entity/ip.entity';
-import { City } from 'src/dictionaries/entity/city.entity';
-import { District } from 'src/dictionaries/entity/district.entity';
-import { Area } from 'src/dictionaries/entity/area.entity';
-import { Country } from 'src/dictionaries/entity/country.entity';
+import { LeasingCompany } from '../entity/leasing-company.entity';
 
 @Module({
   imports: [
@@ -28,6 +25,7 @@ import { Country } from 'src/dictionaries/entity/country.entity';
       SubjectGuarantee,
       Ip,
       Legal,
+      LeasingCompany,
     ]),
   ],
   providers: [PreferenceFilterService],

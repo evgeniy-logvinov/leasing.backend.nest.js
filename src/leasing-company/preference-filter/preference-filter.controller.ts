@@ -24,7 +24,22 @@ export class PreferenceFilterController {
   ) {}
 
   @Get()
-  async getPreferenceFilters(): Promise<PreferenceFilter[]> {
+  async getPreferenceFilter(@Req() req: Request): Promise<PreferenceFilter> {
+    const userId = getUserIdFromReq(req);
+    return this.preferenceFilterService.getByUserId(userId);
+  }
+
+  @Get('/all')
+  async getPreferenceFilters(@Req() req: Request): Promise<PreferenceFilter[]> {
+    await this.adminCheck(req);
     return this.preferenceFilterService.getAll();
+  }
+
+  async adminCheck(req: Request) {
+    const userId = getUserIdFromReq(req);
+    const admin = await this.userService.adminRole(userId);
+    if (!admin) {
+      throw new ForbiddenException('Access denied');
+    }
   }
 }

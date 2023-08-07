@@ -22,7 +22,7 @@ export class ClientProfileService {
     return this.clientProfileRepository.find();
   }
 
-  async getAllByUserId(id: string): Promise<ClientProfile> {
+  async getByUserId(id: string): Promise<ClientProfile> {
     const client = await this.leasingClientRepository.findOneOrFail({
       where: { user: { id } },
       relations: { clientProfile: true },

@@ -46,7 +46,7 @@ export class Ip extends LeasingEntity {
   maxAllSum: number;
 
   @Column({ nullable: true })
-  hasRestrictions: number;
+  hasRestrictions: boolean;
 
   @Column({ nullable: true })
   minAdvance: number;

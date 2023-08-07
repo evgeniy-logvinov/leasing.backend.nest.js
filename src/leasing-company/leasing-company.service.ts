@@ -41,7 +41,7 @@ export class LeasingCompanyService {
         user: true,
         preferenceFilter: {
           cityOfPresenceCustomerCoverageArea: {
-            cities: true,
+            city: true,
           },
           gk: {
             subCompanies: true,

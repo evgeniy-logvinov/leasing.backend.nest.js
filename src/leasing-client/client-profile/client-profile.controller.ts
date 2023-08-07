@@ -29,7 +29,7 @@ export class ClientProfileController {
   @Get()
   async getClientProfile(@Req() req: Request): Promise<ClientProfile> {
     const userId = getUserIdFromReq(req);
-    return this.clientProfileService.getAllByUserId(userId);
+    return this.clientProfileService.getByUserId(userId);
   }
 
   @Put()
