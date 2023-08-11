@@ -1,5 +1,6 @@
 import { LeasingEntity } from 'src/entity/leasing-entity.entity';
-import { Column, Entity } from 'typeorm';
+import { User } from 'src/user/entity/user.entity';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 
 @Entity()
 export class Employee extends LeasingEntity {
@@ -12,8 +13,9 @@ export class Employee extends LeasingEntity {
   @Column()
   patronymic: string;
 
-  @Column()
-  email: string;
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User;
 
   @Column()
   phone: string;

@@ -7,6 +7,13 @@ delete from application;
 delete from leasing_client;
 delete from client_profile;
 
+delete from analitic;
+delete from analitics_department;
+delete from manager;
+delete from city_manager;
+delete from sales_department;
+delete from employee;
+
 delete from user;
 delete from role;
 delete from permission;
