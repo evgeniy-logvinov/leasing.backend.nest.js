@@ -29,7 +29,7 @@ export class ClientProfileService {
     });
 
     if (!client?.clientProfile?.id) {
-      throw new InternalServerErrorException('Client profile not exists');
+      throw new InternalServerErrorException('Profile not exists');
     }
 
     return this.clientProfileRepository.findOne({
@@ -60,15 +60,15 @@ export class ClientProfileService {
         state,
       });
 
-      return { message: 'Client profile successfully updated!' };
+      return { message: 'Profile successfully updated!' };
     } catch (error) {
       // postgresql
       if (error.code === '23505') {
-        throw new ConflictException('Client profile already exists');
+        throw new ConflictException('Profile already exists');
       }
       // For mysql
       if (error.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException('Client profile already exists');
+        throw new ConflictException('Profile already exists');
       }
       console.log('err', error);
       throw new InternalServerErrorException();

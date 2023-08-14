@@ -24,7 +24,7 @@ export class FillLeasingCompany1692039658769 implements MigrationInterface {
       {
         description: LeasingCompanyDescription.REG,
         companyName: CompanyNames.REG_FILLED,
-        email: UserEmails.CLIENT_FILLED,
+        email: UserEmails.COMPANY_FILLED,
         inviteId: uuidv4(),
       },
       //   {
