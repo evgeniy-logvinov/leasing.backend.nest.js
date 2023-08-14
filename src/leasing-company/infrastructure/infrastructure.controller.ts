@@ -1,15 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
+import { getUserIdFromReq } from 'src/utils/user';
 import { Infrastructure } from './entity/infrustructure.entity';
 import { InfrastructureService } from './infrastructure.service';
 
-@ApiTags('LeasingCompany')
+@ApiBearerAuth()
+@ApiTags('Infrastructure')
 @Controller('infrastructure')
+@UseGuards(AuthGuard())
 export class InfrastructureController {
   constructor(private readonly infrastructureService: InfrastructureService) {}
 
   @Get()
-  getInfrustructure(): Promise<Infrastructure[]> {
-    return this.infrastructureService.getAll();
+  getInfrustructure(@Req() req: Request): Promise<Infrastructure> {
+    const userId = getUserIdFromReq(req);
+    return this.infrastructureService.getByUserId(userId);
   }
 }

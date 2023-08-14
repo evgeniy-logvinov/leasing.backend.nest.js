@@ -9,6 +9,7 @@ import { Analitic } from './entity/analitic.entity';
 import { SalesDepartment } from './entity/sales-department.entity';
 import { CityManager } from './entity/city-manager.entity';
 import { Manager } from './entity/manager.entity';
+import { LeasingCompany } from '../entity/leasing-company.entity';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { Manager } from './entity/manager.entity';
       SalesDepartment,
       CityManager,
       Manager,
+      LeasingCompany,
     ]),
   ],
   providers: [InfrastructureService],
