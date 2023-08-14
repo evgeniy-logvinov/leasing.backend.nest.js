@@ -31,6 +31,19 @@ export enum LeasingClientsDescription {
   REG_EMPTY = 'Dumb client reg empty',
 }
 
+export enum LeasingCompanyDescription {
+  REG = 'Dumb client reg',
+  REG_EMPTY = 'Dumb client reg empty',
+}
+
+export enum CompanyNames {
+  UNREG = 'Unreg company 1 from init script',
+  REG_EMPTY = 'Reg company from init script empty',
+  REG_FILLED = 'Reg company from init script filled',
+  BLOCKED = 'Blocked company from init script',
+  INVITED = 'Inivted company from init script',
+}
+
 export enum UserEmails {
   ADMIN_CONFIRMED = 'adminEmailConfirmed@gmail.com',
   ADMIN_NOT_CONFIRMED = 'adminEmailNotConfirmed@gmail.com',
