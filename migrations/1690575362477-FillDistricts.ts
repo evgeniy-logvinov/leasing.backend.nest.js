@@ -14,6 +14,10 @@ export class FillDistricts1690575362477 implements MigrationInterface {
         select: DistrictsEnum.DISTRICT_96,
         where: 'Уральский федеральный округ',
       },
+      {
+        select: DistrictsEnum.DISTRICT_77,
+        where: 'Центральный федеральный округ',
+      },
     ];
     districts.forEach((district) => {
       queryRunner.query(

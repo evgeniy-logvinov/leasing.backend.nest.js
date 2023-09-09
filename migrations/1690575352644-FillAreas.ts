@@ -10,6 +10,10 @@ export class FillAreas1690575352644 implements MigrationInterface {
         select: AreasEnum.UFO,
         where: CountriesEnum.RUSSIA,
       },
+      {
+        select: AreasEnum.CFO,
+        where: CountriesEnum.RUSSIA,
+      },
     ];
     areas.forEach((area) => {
       queryRunner.query(

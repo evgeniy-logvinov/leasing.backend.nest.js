@@ -1,3 +1,4 @@
+delete from city_of_presence_customer_coverage_area;
 delete from city;
 delete from district;
 delete from area;

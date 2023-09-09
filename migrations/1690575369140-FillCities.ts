@@ -18,6 +18,10 @@ export class FillCities1690575369140 implements MigrationInterface {
         select: CitiesEnum.EKATERINGBURG,
         where: DistrictsEnum.DISTRICT_96,
       },
+      {
+        select: CitiesEnum.MOSCOW,
+        where: DistrictsEnum.DISTRICT_77,
+      },
     ];
     cities.forEach((city) => {
       queryRunner.query(

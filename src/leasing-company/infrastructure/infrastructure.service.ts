@@ -1,7 +1,8 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsSelect, Repository } from 'typeorm';
 import { LeasingCompany } from '../entity/leasing-company.entity';
+import { Employee } from './entity/employee.entity';
 import { Infrastructure } from './entity/infrustructure.entity';
 
 @Injectable()
@@ -35,13 +36,41 @@ export class InfrastructureService {
     if (!company?.infrastructure?.id) {
       throw new InternalServerErrorException('Infrastructure not exists');
     }
-
+    const employee: FindOptionsSelect<Employee> = {
+      id: true,
+      user: { email: true },
+      patronymic: true,
+      firstName: true,
+      lastName: true,
+      isOnline: true,
+      mobilePhone: true,
+      phone: true,
+    };
     return this.infrastructureRepository.findOne({
-      relations: {
-        analiticsDepartment: { analitics: true, head: true },
+      select: {
+        analiticsDepartment: {
+          id: true,
+          head: employee,
+          analitics: employee,
+        },
         salesDepartment: {
-          cityManager: { head: true, manager: true },
-          head: true,
+          id: true,
+          head: employee,
+          cityManager: {
+            id: true,
+            head: employee,
+            manager: employee,
+          },
+        },
+      },
+      relations: {
+        analiticsDepartment: {
+          analitics: { user: true },
+          head: { user: true },
+        },
+        salesDepartment: {
+          cityManager: { head: { user: true }, manager: { user: true } },
+          head: { user: true },
         },
       },
       where: { id: company.infrastructure.id },

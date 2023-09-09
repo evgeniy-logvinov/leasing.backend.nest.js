@@ -43,6 +43,14 @@ export class PreferenceFilterService {
     }
 
     return this.preferenceFilterRepository.findOne({
+      relations: {
+        gk: { subCompanies: true },
+        cityOfPresenceCustomerCoverageArea: {
+          city: true,
+          сustomerCoverageAreas: true,
+        },
+        subjectGuarantee: true,
+      },
       where: { id: company.preferenceFilter.id },
     });
   }

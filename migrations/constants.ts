@@ -4,11 +4,13 @@ export enum CountriesEnum {
 
 export enum AreasEnum {
   UFO = 'Уральский федеральный округ',
+  CFO = 'Центральный федеральный округ',
 }
 
 export enum DistrictsEnum {
   DISTRICT_74 = 'Челябинская область',
   DISTRICT_96 = 'Свердловская область',
+  DISTRICT_77 = 'Московская область',
 }
 
 export enum CitiesEnum {
