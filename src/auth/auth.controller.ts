@@ -56,7 +56,6 @@ export class AuthController {
   signIn(
     @Body(ValidationPipe) signinCredentialsDto: SignInCredentialsDto,
   ): Promise<{ accessToken: string; user: JwtPayload }> {
-    console.log('Privet Zarina');
     // console.log('signinCredentialsDto', signinCredentialsDto);
     return this.authService.logIn(signinCredentialsDto);
   }

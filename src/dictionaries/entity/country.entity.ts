@@ -8,5 +8,5 @@ export class Country extends LeasingEntity {
   name: string;
 
   @OneToMany(() => Area, (item) => item.country)
-  area: Area[];
+  children: Area[];
 }

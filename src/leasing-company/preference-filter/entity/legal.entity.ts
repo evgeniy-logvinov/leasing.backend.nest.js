@@ -4,7 +4,7 @@ import { Column, Entity } from 'typeorm';
 @Entity()
 export class Legal extends LeasingEntity {
   @Column({ default: true })
-  hasLegalEntity: boolean;
+  hasLegal: boolean;
 
   @Column({ default: true })
   hasOsn: boolean;

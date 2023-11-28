@@ -50,6 +50,11 @@ export class PreferenceFilterService {
           сustomerCoverageAreas: true,
         },
         subjectGuarantee: true,
+        typesOfFinancedHoldings: {
+          newCriteria: { ip: true, legal: true },
+          previouslyUsedCriteria: { ip: true, legal: true },
+          returnableCriteria: { ip: true, legal: true },
+        },
       },
       where: { id: company.preferenceFilter.id },
     });

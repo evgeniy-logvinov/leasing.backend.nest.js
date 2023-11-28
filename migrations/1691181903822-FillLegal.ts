@@ -15,7 +15,7 @@ interface LegalSql {
   forTaxi: number;
   hasEchn: number;
   hasEnvd: number;
-  hasLegalEntity: number;
+  hasLegal: number;
   hasOsn: number;
   hasRestrictions: number;
   hasUsn: number;
@@ -38,7 +38,7 @@ export class FillLegal1691181903822 implements MigrationInterface {
         forTaxi: 0,
         hasEchn: 0,
         hasEnvd: 0,
-        hasLegalEntity: 0,
+        hasLegal: 0,
         hasOsn: 0,
         hasRestrictions: 0,
         hasUsn: 0,
@@ -57,7 +57,7 @@ export class FillLegal1691181903822 implements MigrationInterface {
         forTaxi: 1,
         hasEchn: 1,
         hasEnvd: 1,
-        hasLegalEntity: 1,
+        hasLegal: 1,
         hasOsn: 1,
         hasRestrictions: 1,
         hasUsn: 1,
@@ -76,7 +76,7 @@ export class FillLegal1691181903822 implements MigrationInterface {
         forTaxi: 1,
         hasEchn: 1,
         hasEnvd: 1,
-        hasLegalEntity: 1,
+        hasLegal: 1,
         hasOsn: 1,
         hasRestrictions: 1,
         hasUsn: 1,
@@ -85,7 +85,7 @@ export class FillLegal1691181903822 implements MigrationInterface {
     ips.forEach((ip) => {
       queryRunner.query(
         `INSERT INTO legal (
-          hasLegalEntity, 
+          hasLegal, 
           hasOsn, 
           osnRegistrationPeriod, 
           hasUsn, 
@@ -104,7 +104,7 @@ export class FillLegal1691181903822 implements MigrationInterface {
           id
           )
             VALUES(
-                '${ip.hasLegalEntity}',
+                '${ip.hasLegal}',
                 '${ip.hasOsn}',
                 '${ip.osnRegistrationPeriod}',
                 '${ip.hasUsn}',

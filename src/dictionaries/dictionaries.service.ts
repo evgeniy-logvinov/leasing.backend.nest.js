@@ -22,9 +22,9 @@ export class DictionariesService {
   getAll(): Promise<Country[]> {
     return this.countryRepository.find({
       relations: {
-        area: {
-          district: {
-            cities: true,
+        children: {
+          children: {
+            children: true,
           },
         },
       },

@@ -19,7 +19,7 @@ export class InfrastructureService {
       relations: {
         analiticsDepartment: { analitics: true, head: true },
         salesDepartment: {
-          cityManager: { manager: true, head: true },
+          cityManager: { manager: true, head: true, city: true },
           head: true,
         },
       },
@@ -69,7 +69,11 @@ export class InfrastructureService {
           head: { user: true },
         },
         salesDepartment: {
-          cityManager: { head: { user: true }, manager: { user: true } },
+          cityManager: {
+            head: { user: true },
+            manager: { user: true },
+            city: true,
+          },
           head: { user: true },
         },
       },

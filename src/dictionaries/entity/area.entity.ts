@@ -8,9 +8,9 @@ export class Area extends LeasingEntity {
   @Column()
   name: string;
 
-  @ManyToOne(() => Country, (item) => item.area)
+  @ManyToOne(() => Country, (item) => item.children)
   country: Country;
 
   @OneToMany(() => District, (item) => item.area)
-  district: District[];
+  children: District[];
 }

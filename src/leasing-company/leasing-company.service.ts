@@ -40,9 +40,7 @@ export class LeasingCompanyService {
       relations: {
         user: true,
         preferenceFilter: {
-          cityOfPresenceCustomerCoverageArea: {
-            city: true,
-          },
+          cityOfPresenceCustomerCoverageArea: true,
           gk: {
             subCompanies: true,
           },
@@ -57,7 +55,7 @@ export class LeasingCompanyService {
         infrastructure: {
           analiticsDepartment: { analitics: true, head: true },
           salesDepartment: {
-            cityManager: { manager: true, head: true },
+            cityManager: { manager: true, head: true, city: true },
             head: true,
           },
         },

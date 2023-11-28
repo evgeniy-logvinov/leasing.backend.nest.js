@@ -11,9 +11,9 @@ export class FillPreferenceFilter1691413124775 implements MigrationInterface {
       {
         id: uuidv4(),
       },
-      {
-        id: uuidv4(),
-      },
+      // {
+      //   id: uuidv4(),
+      // },
     ];
     filters.forEach((filter) => {
       queryRunner.query(
