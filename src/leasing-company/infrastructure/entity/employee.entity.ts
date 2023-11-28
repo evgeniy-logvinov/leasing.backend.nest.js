@@ -1,6 +1,7 @@
 import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { LeasingCompany } from 'src/leasing-company/entity/leasing-company.entity';
 import { User } from 'src/user/entity/user.entity';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 
 @Entity()
 export class Employee extends LeasingEntity {
@@ -25,4 +26,7 @@ export class Employee extends LeasingEntity {
 
   @Column({ default: false })
   isOnline: boolean;
+
+  @ManyToOne(() => LeasingCompany, (item) => item.employees)
+  company: LeasingCompany;
 }

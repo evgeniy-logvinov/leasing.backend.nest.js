@@ -8,7 +8,6 @@ import {
 
 interface LeasingCompanySql {
   description: string;
-  inviteId?: string;
   companyName: string;
   email: UserEmails;
 }
@@ -25,7 +24,6 @@ export class FillLeasingCompany1692039658769 implements MigrationInterface {
         description: LeasingCompanyDescription.REG,
         companyName: CompanyNames.REG_FILLED,
         email: UserEmails.COMPANY_FILLED,
-        inviteId: uuidv4(),
       },
       //   {
       //     description: LeasingCompanyDescription.REG_EMPTY,
@@ -40,7 +38,6 @@ export class FillLeasingCompany1692039658769 implements MigrationInterface {
       //   {
       //     description: 'Dumb client invited',
       //     companyName: CompanyNames.INVITED,
-      //     inviteId: uuidv4(),
       //     email: UserEmails.CLIENT_INVITED,
       //   },
     ];
@@ -50,7 +47,6 @@ export class FillLeasingCompany1692039658769 implements MigrationInterface {
         `INSERT INTO leasing_company (
             companyProfileId,
             description,
-            inviteId,
             userId,
             infrastructureId,
             preferenceFilterId,
@@ -58,7 +54,6 @@ export class FillLeasingCompany1692039658769 implements MigrationInterface {
         )
         SELECT company_profile.id,
             '${company.description}',
-            '${company.inviteId}',
             user.id,
             infrastructure.id,
             preference_filter.id,

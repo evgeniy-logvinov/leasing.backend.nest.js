@@ -10,6 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { Role } from '../role/entity/role.entity';
 import { LeasingEntity } from 'src/entity/leasing-entity.entity';
+import { UserStateEnum } from '../enum/UserStateEnum';
 
 @Entity()
 @Unique(['email'])
@@ -40,6 +41,16 @@ export class User extends LeasingEntity {
   @ManyToOne(() => Role, (role) => role.id)
   @JoinColumn()
   role: Role;
+
+  @Column({ nullable: true, select: false })
+  inviteId: string;
+
+  @Column({
+    type: 'enum',
+    enum: UserStateEnum,
+    default: UserStateEnum.UNREG,
+  })
+  state: UserStateEnum;
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);

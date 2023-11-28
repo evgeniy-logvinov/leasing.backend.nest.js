@@ -17,9 +17,6 @@ export class LeasingClient extends LeasingEntity {
   @Column({ default: '' })
   description: string;
 
-  @Column({ nullable: true, select: false })
-  inviteId: string;
-
   @OneToMany(() => Application, (item) => item.client)
   applications: Application[];
 }

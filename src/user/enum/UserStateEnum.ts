@@ -1,4 +1,4 @@
-export enum ClientStateEnum {
+export enum UserStateEnum {
   UNREG = 'UNREG',
   REG = 'REG',
   INVITED = 'INVITED',

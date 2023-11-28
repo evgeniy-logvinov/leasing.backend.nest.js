@@ -4,18 +4,16 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CompanyStateEnum } from 'src/user/enum/CompanyStateEnum';
 import { Repository } from 'typeorm';
 import { CompanyProfile } from './company-profile/entity/company-profile.entity';
 import { LeasingCompany } from './entity/leasing-company.entity';
-import { v4 as uuidv4 } from 'uuid';
-import { EmailService } from 'src/email/services/email.service';
 import { CreateCompanyDto } from 'src/user/dto/create-company.dto';
 import { User } from 'src/user/entity/user.entity';
 import { RoleService } from 'src/user/role/role.service';
 import { RoleEnum } from 'src/user/enum/RoleEnum';
 import { Infrastructure } from './infrastructure/entity/infrustructure.entity';
 import { PreferenceFilter } from './preference-filter/entity/preference-filter.entity';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class LeasingCompanyService {
@@ -30,7 +28,7 @@ export class LeasingCompanyService {
     private infrastructureRepository: Repository<Infrastructure>,
     @InjectRepository(PreferenceFilter)
     private preferenceFilterRepository: Repository<PreferenceFilter>,
-    private emailService: EmailService,
+    private userService: UserService,
     private roleService: RoleService,
   ) {}
 
@@ -122,36 +120,14 @@ export class LeasingCompanyService {
 
   async invite(id: string): Promise<CompanyProfile> {
     try {
-      const profile = await this.companyProfileRepository.findOne({
-        where: { id },
-      });
-
-      if (profile.state !== CompanyStateEnum.UNREG) {
-        throw new InternalServerErrorException(
-          'User can be invite only when unregistred',
-        );
-      }
-
-      const client = await this.leasingCompanyRepository.findOne({
+      const company = await this.leasingCompanyRepository.findOne({
         relations: { user: true },
         where: { companyProfile: { id } },
       });
-      const resetPasswordId = uuidv4();
 
-      await this.userRepository.update(client.user.id, {
-        resetPasswordId,
-        isEmailConfirmed: true,
-      });
+      await this.userService.invite(company.user.id);
 
-      await this.companyProfileRepository.update(id, {
-        state: CompanyStateEnum.INVITED,
-      });
-
-      await this.emailService.sendResetEmail(
-        resetPasswordId,
-        client.user.email,
-      );
-      return this.companyProfileRepository.findOne({ where: { id } });
+      return company.companyProfile;
     } catch (err) {
       console.log(err);
       throw new InternalServerErrorException(`Can't invite user`);
@@ -160,20 +136,14 @@ export class LeasingCompanyService {
 
   async block(id: string): Promise<CompanyProfile> {
     try {
-      const profile = await this.companyProfileRepository.findOne({
-        where: { id },
+      const company = await this.leasingCompanyRepository.findOne({
+        relations: { user: true },
+        where: { companyProfile: { id } },
       });
 
-      if (profile.state !== CompanyStateEnum.REG) {
-        throw new InternalServerErrorException(
-          'User can be blocked only when registred',
-        );
-      }
+      await this.userService.block(company.user.id);
 
-      await this.companyProfileRepository.update(id, {
-        state: CompanyStateEnum.BLOCKED,
-      });
-      return this.companyProfileRepository.findOne({ where: { id } });
+      return company.companyProfile;
     } catch (err) {
       throw new InternalServerErrorException(`Can't block user`);
     }
@@ -181,11 +151,14 @@ export class LeasingCompanyService {
 
   async unblock(id: string): Promise<CompanyProfile> {
     try {
-      await this.companyProfileRepository.update(id, {
-        state: CompanyStateEnum.REG,
+      const company = await this.leasingCompanyRepository.findOne({
+        relations: { user: true },
+        where: { companyProfile: { id } },
       });
 
-      return this.companyProfileRepository.findOne({ where: { id } });
+      await this.userService.unblock(company.user.id);
+
+      return company.companyProfile;
     } catch (err) {
       console.log(err);
       throw new InternalServerErrorException(`Can't unblock user`);

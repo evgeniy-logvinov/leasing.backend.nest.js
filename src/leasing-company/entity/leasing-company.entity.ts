@@ -1,7 +1,8 @@
 import { LeasingEntity } from 'src/entity/leasing-entity.entity';
 import { User } from 'src/user/entity/user.entity';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { CompanyProfile } from '../company-profile/entity/company-profile.entity';
+import { Employee } from '../infrastructure/entity/employee.entity';
 import { Infrastructure } from '../infrastructure/entity/infrustructure.entity';
 import { PreferenceFilter } from '../preference-filter/entity/preference-filter.entity';
 
@@ -26,6 +27,6 @@ export class LeasingCompany extends LeasingEntity {
   @Column({ default: '' })
   description: string;
 
-  @Column({ nullable: true, select: false })
-  inviteId: string;
+  @OneToMany(() => Employee, (item) => item.company)
+  employees: Employee[];
 }

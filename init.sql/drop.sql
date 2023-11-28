@@ -1,13 +1,6 @@
-delete from city_of_presence_customer_coverage_area;
-delete from city;
-delete from district;
-delete from area;
-delete from country;
-
 delete from application;
 delete from leasing_client;
 delete from client_profile;
-
 
 delete from leasing_company;
 delete from infrastructure;
@@ -17,6 +10,7 @@ delete from manager;
 delete from city_manager;
 delete from sales_department;
 delete from employee;
+
 delete from types_of_financed_holding;
 delete from criteria_financed_holding;
 delete from ip;
@@ -33,4 +27,11 @@ delete from user;
 delete from role;
 delete from permission;
 delete from role_permissions_permission;
+
+delete from city_of_presence_customer_coverage_area;
+delete from city;
+delete from district;
+delete from area;
+delete from country;
+
 delete from migrations;

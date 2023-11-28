@@ -4,16 +4,14 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EmailService } from 'src/email/services/email.service';
-import { ClientStateEnum } from 'src/user/enum/ClientStateEnum';
 import { Repository } from 'typeorm';
 import { ClientProfile } from './client-profile/entity/client-profile.entity';
 import { LeasingClient } from './entity/leasing-client.entity';
-import { v4 as uuidv4 } from 'uuid';
 import { CreateClientDto } from 'src/user/dto/create-client.dto';
 import { RoleEnum } from 'src/user/enum/RoleEnum';
 import { User } from 'src/user/entity/user.entity';
 import { RoleService } from 'src/user/role/role.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class LeasingClientService {
@@ -24,7 +22,7 @@ export class LeasingClientService {
     private clientProfileRepository: Repository<ClientProfile>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private emailService: EmailService,
+    private userService: UserService,
     private roleService: RoleService,
   ) {}
 
@@ -92,34 +90,14 @@ export class LeasingClientService {
 
   async invite(id: string): Promise<ClientProfile> {
     try {
-      const profile = await this.clientProfileRepository.findOne({
-        where: { id },
-      });
-
-      if (profile.state !== ClientStateEnum.UNREG) {
-        throw new InternalServerErrorException(
-          'User can be invite only when unregistred',
-        );
-      }
-
-      const client = await this.leasingClientRepository.findOne({
+      const leasingClient = await this.leasingClientRepository.findOne({
         relations: { user: true },
         where: { clientProfile: { id } },
       });
-      const resetPasswordId = uuidv4();
-      await this.userRepository.update(client.user.id, {
-        resetPasswordId,
-        isEmailConfirmed: true,
-      });
-      await this.clientProfileRepository.update(id, {
-        state: ClientStateEnum.INVITED,
-      });
 
-      await this.emailService.sendResetEmail(
-        resetPasswordId,
-        client.user.email,
-      );
-      return this.clientProfileRepository.findOne({ where: { id } });
+      await this.userService.invite(leasingClient.user.id);
+
+      return leasingClient.clientProfile;
     } catch (err) {
       console.log(err);
       throw new InternalServerErrorException(`Can't invite user`);
@@ -128,20 +106,14 @@ export class LeasingClientService {
 
   async block(id: string): Promise<ClientProfile> {
     try {
-      const profile = await this.clientProfileRepository.findOne({
-        where: { id },
+      const leasingClient = await this.leasingClientRepository.findOne({
+        relations: { user: true },
+        where: { clientProfile: { id } },
       });
 
-      if (profile.state !== ClientStateEnum.REG) {
-        throw new InternalServerErrorException(
-          'User can be blocked only when registred',
-        );
-      }
+      await this.userService.block(leasingClient.user.id);
 
-      await this.clientProfileRepository.update(id, {
-        state: ClientStateEnum.BLOCKED,
-      });
-      return this.clientProfileRepository.findOne({ where: { id } });
+      return leasingClient.clientProfile;
     } catch (err) {
       throw new InternalServerErrorException(`Can't block user`);
     }
@@ -149,11 +121,14 @@ export class LeasingClientService {
 
   async unblock(id: string): Promise<ClientProfile> {
     try {
-      await this.clientProfileRepository.update(id, {
-        state: ClientStateEnum.REG,
+      const leasingClient = await this.leasingClientRepository.findOne({
+        relations: { user: true },
+        where: { clientProfile: { id } },
       });
 
-      return this.clientProfileRepository.findOne({ where: { id } });
+      await this.userService.unblock(leasingClient.user.id);
+
+      return leasingClient.clientProfile;
     } catch (err) {
       console.log(err);
       throw new InternalServerErrorException(`Can't unblock user`);

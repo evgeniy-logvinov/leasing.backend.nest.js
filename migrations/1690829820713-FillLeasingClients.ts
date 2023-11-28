@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface LeasingClientSql {
   description: string;
-  inviteId?: string;
   clientName: string;
   email: UserEmails;
 }
@@ -39,17 +38,16 @@ export class FillLeasingClients1690829820713 implements MigrationInterface {
       {
         description: 'Dumb client invited',
         clientName: ClientNames.INVITED,
-        inviteId: uuidv4(),
         email: UserEmails.CLIENT_INVITED,
       },
     ];
 
     clients.forEach((client) => {
       queryRunner.query(
-        `INSERT INTO leasing_client (clientProfileId, description, inviteId, userId, id)
-                  SELECT client_profile.id, '${client.description}', '${
-          client.inviteId
-        }', user.id, '${uuidv4()}'
+        `INSERT INTO leasing_client (clientProfileId, description, userId, id)
+                  SELECT client_profile.id, '${
+                    client.description
+                  }', user.id, '${uuidv4()}'
                   FROM client_profile, user
                   WHERE client_profile.fullName = '${
                     client.clientName

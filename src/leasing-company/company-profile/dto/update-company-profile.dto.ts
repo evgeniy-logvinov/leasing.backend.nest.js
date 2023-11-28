@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDefined, IsEnum, IsNotEmpty } from 'class-validator';
-import { CompanyStateEnum } from 'src/user/enum/CompanyStateEnum';
+import { IsNotEmpty } from 'class-validator';
 
 export class UpdateCompanyProfileDto {
   @ApiProperty()
@@ -16,12 +15,6 @@ export class UpdateCompanyProfileDto {
   @ApiProperty()
   @IsNotEmpty()
   inn: string;
-
-  @ApiProperty({ enum: CompanyStateEnum, enumName: 'CompanyStateEnum' })
-  @IsEnum(CompanyStateEnum)
-  @IsDefined()
-  @IsNotEmpty()
-  state: CompanyStateEnum;
 
   @ApiProperty()
   accreditation: boolean;

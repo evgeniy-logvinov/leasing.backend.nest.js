@@ -50,14 +50,13 @@ export class ClientProfileService {
       throw new InternalServerErrorException('Client not found');
     }
 
-    const { fullName, inn, shortName, state, id } = newProfile;
+    const { fullName, inn, shortName, id } = newProfile;
 
     try {
       await this.clientProfileRepository.update(id, {
         fullName,
         inn,
         shortName,
-        state,
       });
 
       return { message: 'Profile successfully updated!' };

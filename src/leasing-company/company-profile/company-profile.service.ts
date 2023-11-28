@@ -51,14 +51,13 @@ export class CompanyProfileService {
       throw new InternalServerErrorException('Company not found');
     }
 
-    const { fullName, inn, shortName, state, id } = newProfile;
+    const { fullName, inn, shortName, id } = newProfile;
 
     try {
       await this.companyInfoRepository.update(id, {
         fullName,
         inn,
         shortName,
-        state,
       });
 
       return { message: 'Profile successfully updated!' };

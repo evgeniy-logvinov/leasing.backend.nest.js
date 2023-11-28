@@ -12,6 +12,8 @@ export class InfrastructureService {
     private infrastructureRepository: Repository<Infrastructure>,
     @InjectRepository(LeasingCompany)
     private leasingCompanyRepository: Repository<LeasingCompany>,
+    @InjectRepository(Employee)
+    private employeeRepository: Repository<Employee>,
   ) {}
 
   getAll(): Promise<Infrastructure[]> {
@@ -23,6 +25,16 @@ export class InfrastructureService {
           head: true,
         },
       },
+    });
+  }
+
+  async getAllEmployees(id: string): Promise<Employee[]> {
+    const company = await this.leasingCompanyRepository.findOneOrFail({
+      where: { user: { id } },
+    });
+
+    return await this.employeeRepository.find({
+      where: { company: { id: company.id } },
     });
   }
 

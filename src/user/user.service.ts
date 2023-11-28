@@ -19,6 +19,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { Repository } from 'typeorm';
 import { Role } from './role/entity/role.entity';
 import { Permission } from './permission/entity/permission.entity';
+import { UserStateEnum } from './enum/UserStateEnum';
+import { EmailService } from 'src/email/services/email.service';
 
 @Injectable()
 export class UserService {
@@ -30,6 +32,7 @@ export class UserService {
     @InjectRepository(Permission)
     private permissionRepository: Repository<Permission>,
     private roleService: RoleService,
+    private emailService: EmailService,
   ) {}
 
   async createAdmin(
@@ -206,5 +209,64 @@ export class UserService {
       where: { id: userId },
     });
     return user.role.name === RoleEnum.ROLE_LEASING_CLIENT;
+  }
+
+  async invite(id: string): Promise<User> {
+    try {
+      const user = await this.findOneById({ id });
+
+      if (user.state !== UserStateEnum.UNREG) {
+        throw new InternalServerErrorException(
+          'User can be invite only when unregistred',
+        );
+      }
+      const resetPasswordId = uuidv4();
+
+      await this.userRepository.update(user.id, {
+        resetPasswordId,
+        isEmailConfirmed: true,
+        state: UserStateEnum.INVITED,
+      });
+
+      await this.emailService.sendResetEmail(resetPasswordId, user.email);
+
+      return this.findOneById({ id });
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerErrorException(`Can't invite user`);
+    }
+  }
+
+  async block(id: string): Promise<User> {
+    try {
+      const user = await this.findOneById({ id });
+
+      if (user.state !== UserStateEnum.REG) {
+        throw new InternalServerErrorException(
+          'User can be blocked only when registred',
+        );
+      }
+
+      await this.userRepository.update(id, {
+        state: UserStateEnum.BLOCKED,
+      });
+
+      return this.findOneById({ id });
+    } catch (err) {
+      throw new InternalServerErrorException(`Can't block user`);
+    }
+  }
+
+  async unblock(id: string): Promise<User> {
+    try {
+      await this.userRepository.update(id, {
+        state: UserStateEnum.REG,
+      });
+
+      return this.findOneById({ id });
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerErrorException(`Can't unblock user`);
+    }
   }
 }

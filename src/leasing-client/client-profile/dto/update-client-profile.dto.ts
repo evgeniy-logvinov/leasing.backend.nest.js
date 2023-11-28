@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDefined, IsEnum, IsNotEmpty } from 'class-validator';
-import { ClientStateEnum } from 'src/user/enum/ClientStateEnum';
+import { IsNotEmpty } from 'class-validator';
 
 export class UpdateClientProfileDto {
   @ApiProperty()
@@ -16,10 +15,4 @@ export class UpdateClientProfileDto {
   @ApiProperty()
   @IsNotEmpty()
   inn: string;
-
-  @ApiProperty({ enum: ClientStateEnum, enumName: 'ClientStateEnum' })
-  @IsEnum(ClientStateEnum)
-  @IsDefined()
-  @IsNotEmpty()
-  state: ClientStateEnum;
 }
